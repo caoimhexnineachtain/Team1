@@ -6,7 +6,7 @@ running = True
 WIDTH, HEIGHT = 1280, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 TOP_COLOR = (135, 206, 235)    
-BOTTOM_COLOR = (255, 232, 124)  
+BOTTOM_COLOR = (144, 238, 144)  
 TOP_HEIGHT = (HEIGHT * 3) // 4
 
 running = True
