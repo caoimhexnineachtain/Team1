@@ -1,21 +1,27 @@
 import pygame
-
 pygame.init()
-WINDOW_WIDTH, WINDOW_HEIGHT =1280, 720
-display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Penguine Runner')
 running = True
 
+WIDTH, HEIGHT = 1280, 720
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+TOP_COLOR = (135, 206, 235)    
+BOTTOM_COLOR = (255, 232, 124)  
+TOP_HEIGHT = (HEIGHT * 3) // 4
+
+running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    display_surface.fill('yellow')
+    
+    pygame.draw.rect(screen, TOP_COLOR, (0, 0, WIDTH, TOP_HEIGHT))
+    
+    
+    pygame.draw.rect(screen, BOTTOM_COLOR, (0, TOP_HEIGHT, WIDTH, HEIGHT - TOP_HEIGHT))
 
-    pygame.display.update()
- 
+  
+    pygame.display.flip()
+
 pygame.quit()
-
-
-
