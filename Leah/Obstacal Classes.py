@@ -36,7 +36,6 @@ BOTTOM_COLOR = (144, 238, 144)
 TOP_HEIGHT = (WINDOW_HEIGHT * 3) // 4
 
 catus_surf = pygame.image.load(join('Leah', 'Happy Catus.png')).convert_alpha()
-# running = True
 
 all_sprites = pygame.sprite.Group()
 catus_sprites = pygame.sprite.Group()
