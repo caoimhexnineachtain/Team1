@@ -62,16 +62,6 @@ class Player(pygame.sprite.Sprite):
    
 
 
-# def collisions():
- 
-#     global running
- 
-#     collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, False, pygame.sprite.collide_mask)
-#     if collision_sprites:
-#         player.flash()
-#         if player.health <= 0:
-#             running = False
-
 def collisions():
     global running
 
@@ -85,7 +75,18 @@ def collisions():
 
         if player.health <= 0:
             running = False
-            
+
+def display_score():
+    current_time = pygame.time.get_ticks() // 100
+    text_surf = font.render(str(current_time), True, (0, 0, 0))
+
+    # Top left position
+    text_rect = text_surf.get_frect(topleft=(20, 20))
+
+    screen.blit(text_surf, text_rect)
+
+    pygame.draw.rect(screen, (240, 240, 240), text_rect.inflate(20, 10), 4, 10)
+    
 # Initialise Pygame
 pygame.init()
 
@@ -111,8 +112,8 @@ clock = pygame.time.Clock()
 # #import
 cactus_surf = pygame.image.load(join('Leah', 'Cactus.png')).convert_alpha()
 cactus_surf = pygame.transform.scale(cactus_surf, (250, 250))
-# player_surf = pygame.image.load(join('Leah', 'Player.png')).convert_alpha()
-# player_surf = pygame.transform.scale(player_surf, (2500, 2500))
+font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
+text_surf = font.render('text', True, (240,240,240))
 
 # #sprites
 all_sprites = pygame.sprite.Group()
@@ -134,23 +135,24 @@ while running:
          y = 375
          Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
     
-#      # Move background
+     # Move background
     bg_x -= scroll_speed
 
-#     # Reset position
+    # Reset position
     if bg_x <= -WINDOW_WIDTH:
         bg_x = 0
 
-#     # Draw two backgrounds
+     # Draw two backgrounds
     screen.blit(background, (bg_x, 0))
     screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
 
 
 
-#     #sprites
+     #sprites
     all_sprites.update(dt)
     all_sprites.draw(screen)
     collisions()
+    display_score()
       
     pygame.display.flip()
    
