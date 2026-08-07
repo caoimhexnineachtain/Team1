@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_frect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
         self.direction = pygame.Vector2()
         self.speed = 300
- 
+
         # mask
         self.mask = pygame.mask.from_surface(self.image)
         # flash
@@ -40,6 +40,8 @@ class Player(pygame.sprite.Sprite):
         self.flash_time = 0
         self.flash_duration = 150
         self.health = 3
+        self.damage_cooldown = 500
+        self.last_hit_time = 0
  
     def update(self, dt):
         keys = pygame.key.get_pressed()
@@ -60,15 +62,30 @@ class Player(pygame.sprite.Sprite):
    
 
 
+# def collisions():
+ 
+#     global running
+ 
+#     collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, False, pygame.sprite.collide_mask)
+#     if collision_sprites:
+#         player.flash()
+#         if player.health <= 0:
+#             running = False
+
 def collisions():
- 
     global running
- 
-    collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, True, pygame.sprite.collide_mask)
+
+    collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, False, pygame.sprite.collide_mask)
     if collision_sprites:
-        player.flash()
+        current_time = pygame.time.get_ticks()
+
+        if current_time - player.last_hit_time >= player.damage_cooldown:
+            player.flash()
+            player.last_hit_time = current_time
+
         if player.health <= 0:
             running = False
+            
 # Initialise Pygame
 pygame.init()
 
