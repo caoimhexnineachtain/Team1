@@ -115,12 +115,38 @@ def display_score():
 
     pygame.draw.rect(screen, (240, 240, 240), text_rect.inflate(20, 10), 4, 10)
 
+
+class Hearticon(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Hearticon, self). __init__()
+        self.image = pygame.image.load('Leah','hearticon1.png').convert_alpha()
+        # self.img_heart_02 = pygame.image.load('hearticon1').convert_alpha()
+        # self.img_heart_03 = pygame.image.load('hearticon1').convert_alpha()
+        self.anim_list = [self.img_heart01]
+                        #   self.img_heart02,
+                        #   self.img_heart03]
+        self.anim_index = 0
+        self.max_index = len(self.anim_list) -1
+        self.max_frame_duration = 3
+        self.frame_duration = self.max_frame_duration
+        self.image = self.anim_list[self.anim_index]
+        self.rect = self.image.get_rect()
+        self.rect.right = WINDOW_WIDTH - 10
+        self.rect.top = 10
+    def update(self):
+        if self.frame_duration == 0:
+            self.anim_index += 1
+            if self.anim_index > self.max_index:
+                self.anim_index = 0
+            self.image = self.anim_list[self.anim_index]
+            self.frame_duration = self.max_frame_duration
+        self.frame_duration -= 1
 # Initialise Pygame
 pygame.init()
 
 
 
-# # Screen settings
+# Screen settings
 WINDOW_WIDTH, WINDOW_HEIGHT = 1000, 500
 WIDTH = 1000
 HEIGHT = 500
@@ -147,8 +173,10 @@ text_surf = font.render('text', True, (240,240,240))
 # #sprites
 all_sprites = pygame.sprite.Group()
 cactus_sprites = pygame.sprite.Group()
+heart_sprites = pygame.sprite.Group()
 player = Player(all_sprites)
-# heart_surf = pygame.sprite.Group()
+heart = Hearticon()
+heart_sprites.add(heart)
 
 
 cactus_event = pygame.event.custom_type()
@@ -181,7 +209,9 @@ while running:
 
      #sprites
     all_sprites.update(dt)
+    heart_sprites.update(dt)
     all_sprites.draw(screen)
+    heart_sprites.draw(screen)
     collisions()
     display_score()
       
