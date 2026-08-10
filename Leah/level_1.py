@@ -142,11 +142,14 @@ cactus_surf = pygame.image.load(join('Leah', 'Cactus.png')).convert_alpha()
 cactus_surf = pygame.transform.scale(cactus_surf, (250, 250))
 font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
 text_surf = font.render('text', True, (240,240,240))
+# heart_surf = pygame.image.load(join('Leah', 'heart.png'))
 
 # #sprites
 all_sprites = pygame.sprite.Group()
 cactus_sprites = pygame.sprite.Group()
 player = Player(all_sprites)
+# heart_surf = pygame.sprite.Group()
+
 
 cactus_event = pygame.event.custom_type()
 pygame.time.set_timer(cactus_event, 900)
