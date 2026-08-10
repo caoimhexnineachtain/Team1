@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__(groups)
         self.start_x = WINDOW_WIDTH // 2
         self.ground_y = 550
-        self.image = pygame.image.load(join('Leah', 'Player.png')).convert_alpha()
+        self.image = pygame.image.load(join("caoimhe", "Images", 'Player.png')).convert_alpha()
         self.image = pygame.transform.scale(self.image, (250, 250))
         self.rect = self.image.get_rect(midtop=(self.start_x, self.ground_y))
         
@@ -129,7 +129,7 @@ def display_score():
 class Hearticon(pygame.sprite.Sprite): 
     def __init__(self, position): 
         super().__init__() 
-        self.image = pygame.image.load(join('Leah', 'hearticon1.png')).convert_alpha() 
+        self.image = pygame.image.load(join("caoimhe", "Images", 'hearticon1.png')).convert_alpha() 
         # Make the hearts a suitable size 
         self.image = pygame.transform.scale(self.image, (50, 50) ) 
         # Position 
@@ -158,11 +158,11 @@ scroll_speed = 10 # Increase for faster scrolling
 clock = pygame.time.Clock()
 
 # #import
-cactus_surf = pygame.image.load(join('Leah', 'Cactus.png')).convert_alpha()
+cactus_surf = pygame.image.load(join("caoimhe", "Images", 'Cactus.png')).convert_alpha()
 cactus_surf = pygame.transform.scale(cactus_surf, (250, 250))
 font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
 text_surf = font.render('text', True, (240,240,240))
-# heart_surf = pygame.image.load(join('Leah', 'heart.png'))
+
 
 # #sprites
 all_sprites = pygame.sprite.Group()
