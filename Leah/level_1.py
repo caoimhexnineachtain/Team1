@@ -1,7 +1,7 @@
 import pygame
 import sys
 from os.path import join
-from random import randint, uniform
+from random import randint
 
 
 class Cactus(pygame.sprite.Sprite):
@@ -9,12 +9,13 @@ class Cactus(pygame.sprite.Sprite):
          super().__init__(groups)
          self.original_surf = surf
          self.image = surf
-         self.rect = self.image.get_rect(center=pos)
+         self.rect = self.image.get_rect(midbottom=pos)
          self.pos = pygame.math.Vector2(self.rect.topleft)
          self.start_time = pygame.time.get_ticks()
          self.lifetime = 4000
-         self.speed = 600  # Adjust to match the game's scrolling speed
+         self.speed = 600  
 
+        # Adjust to match the game's scrolling speed
         def update(self, dt):
             self.pos.x -= self.speed * dt
             self.rect.x = round(self.pos.x)
@@ -25,12 +26,18 @@ class Cactus(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
+        self.start_x = WINDOW_WIDTH // 2
+        self.ground_y = 550
         self.image = pygame.image.load(join('Leah', 'Player.png')).convert_alpha()
         self.image = pygame.transform.scale(self.image, (250, 250))
-        self.rect = self.image.get_frect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+        self.rect = self.image.get_rect(midtop=(self.start_x, self.ground_y))
+        
+        
+        # Same positioning method as the cactus
+        # self.rect = self.image.get_rect(midbottom=(self.start_x, self.ground_y))
         self.direction = pygame.Vector2()
         self.speed = 300
-
+        
         # mask
         self.mask = pygame.mask.from_surface(self.image)
         # flash
@@ -42,14 +49,35 @@ class Player(pygame.sprite.Sprite):
         self.health = 3
         self.damage_cooldown = 500
         self.last_hit_time = 0
- 
+        self.gravity = 1200
+        self.jump_speed = -600
+        self.velocity_y = 0
+        self.on_ground = True
+        
+        self.start_x = WINDOW_WIDTH // 2
+        
+        
     def update(self, dt):
         keys = pygame.key.get_pressed()
-        self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
-        self.direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])  
-        self.direction = self.direction.normalize() if self.direction else self.direction
-        self.rect.center += self.direction * self.speed * dt
- 
+
+        # Jump
+        if keys[pygame.K_SPACE] and self.on_ground:
+            self.velocity_y = self.jump_speed
+            self.on_ground = False
+
+        # Gravity
+        self.velocity_y += self.gravity * dt
+        self.rect.y += self.velocity_y * dt
+
+        # Land back on ground
+        if self.rect.bottom >= self.ground_y:
+            self.rect.bottom = self.ground_y
+            self.velocity_y = 0
+            self.on_ground = True
+
+        # Keep player in the same x position
+        self.rect.centerx = self.start_x
+
     def flash(self):
         self.health -= 1
         self.is_flashing = True
@@ -86,7 +114,7 @@ def display_score():
     screen.blit(text_surf, text_rect)
 
     pygame.draw.rect(screen, (240, 240, 240), text_rect.inflate(20, 10), 4, 10)
-    
+
 # Initialise Pygame
 pygame.init()
 
@@ -132,7 +160,7 @@ while running:
             running = False
         if event.type == cactus_event:
          x = WINDOW_WIDTH + randint(200, 1000)
-         y = 375
+         y = 500
          Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
     
      # Move background
