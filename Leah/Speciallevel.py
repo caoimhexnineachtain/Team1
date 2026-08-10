@@ -4,7 +4,7 @@ from os.path import join
 from random import randint
 
 
-class Cactus(pygame.sprite.Sprite):
+class Alien(pygame.sprite.Sprite):
         def __init__(self, surf, pos, groups):
          super().__init__(groups)
          self.original_surf = surf
@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
         self.start_x = WINDOW_WIDTH // 2
-        self.ground_y = 550
+        self.ground_y = 540
         self.normal_surf = pygame.image.load(join('caoimhe', 'images', 'Player.png')).convert_alpha()
         self.image = self.normal_surf
         self.normal_surf = pygame.transform.scale(self.image, (250, 250))
@@ -55,7 +55,7 @@ class Player(pygame.sprite.Sprite):
         self.damage_cooldown = 500
         self.last_hit_time = 0
         self.gravity = 1200
-        self.jump_speed = -600
+        self.jump_speed = -800
         self.velocity_y = 0
         self.on_ground = True
         self.start_x = WINDOW_WIDTH // 2
@@ -98,7 +98,7 @@ class Player(pygame.sprite.Sprite):
 def collisions():
     global running
 
-    collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, False, pygame.sprite.collide_mask)
+    collision_sprites = pygame.sprite.spritecollide(player, alien_sprites, False, pygame.sprite.collide_mask)
     if collision_sprites:
         current_time = pygame.time.get_ticks()
         if current_time - player.last_hit_time >= player.damage_cooldown:
@@ -120,7 +120,7 @@ def collisions():
 
 def display_score():
     current_time = pygame.time.get_ticks() // 100
-    text_surf = font.render(str(current_time), True, (0, 0, 0))
+    text_surf = font.render(str(current_time), True, (225, 225, 255))
 
     # Top left position
     text_rect = text_surf.get_frect(topleft=(20, 20))
@@ -152,7 +152,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Desert Runner")
 
 # # Load background
-background = pygame.image.load(join("caoimhe", "Images", "desert_background.png.png")).convert()
+background = pygame.image.load(join("caoimhe", "Images", "spacelevel.png")).convert()
 background = pygame.transform.scale(background, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # # Background scrolling
@@ -162,19 +162,15 @@ scroll_speed = 10 # Increase for faster scrolling
 clock = pygame.time.Clock()
 
 # #import
-cactus_surf = pygame.image.load(join("caoimhe", "Images", 'Cactus.png')).convert_alpha()
-cactus_surf = pygame.transform.scale(cactus_surf, (250, 250))
+alien_surf = pygame.image.load(join("caoimhe", "Images", 'alien.png')).convert_alpha()
+alien_surf = pygame.transform.scale(alien_surf, (250, 250))
 font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
 text_surf = font.render('text', True, (240,240,240))
 
 
 # #sprites
 all_sprites = pygame.sprite.Group()
-cactus_sprites = pygame.sprite.Group()
-# heart_sprites = pygame.sprite.Group()
-# player = Player(all_sprites)
-# heart = Hearticon()
-# heart_sprites.add(heart)
+alien_sprites = pygame.sprite.Group()
 heart_sprites = pygame.sprite.Group()
 player = Player(all_sprites)
 heart1 = Hearticon((WINDOW_WIDTH - 10, 10))
@@ -195,8 +191,8 @@ while running:
             running = False
         if event.type == cactus_event:
          x = WINDOW_WIDTH + randint(200, 1000)
-         y = 500
-         Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
+         y = 540
+         Alien(alien_surf, (x, y), (all_sprites, alien_sprites))
     
      # Move background
     bg_x -= scroll_speed
