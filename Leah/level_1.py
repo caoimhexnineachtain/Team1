@@ -28,8 +28,9 @@ class Player(pygame.sprite.Sprite):
         super().__init__(groups)
         self.start_x = WINDOW_WIDTH // 2
         self.ground_y = 550
-        self.image = pygame.image.load(join("caoimhe", "Images", 'Player.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (250, 250))
+        self.normal_surf = pygame.image.load(join('caoimhe', 'images', 'Player.png')).convert_alpha()
+        self.image = self.normal_surf
+        self.normal_surf = pygame.transform.scale(self.image, (250, 250))
         self.rect = self.image.get_rect(midtop=(self.start_x, self.ground_y))
         
         
@@ -37,16 +38,19 @@ class Player(pygame.sprite.Sprite):
         # self.rect = self.image.get_rect(midbottom=(self.start_x, self.ground_y))
         self.direction = pygame.Vector2()
         self.speed = 300
-        
-        # mask
+
+        self.hit_surf = pygame.image.load(join('caoimhe', 'images', 'dizzyplayer.png')).convert_alpha()
+        self.hit_surf = pygame.transform.scale(self.hit_surf, (250, 250))
+
+        self.image = self.normal_surf
+
+        self.rect = self.image.get_rect(midbottom=(self.start_x, self.ground_y))
+
+        # Mask
         self.mask = pygame.mask.from_surface(self.image)
-        self.normal_surf = self.image.copy()
-
-        self.flash_surf = self.mask.to_surface(unsetcolor=(0, 0, 0, 0),setcolor=(255, 255, 255, 255))
-
         self.is_flashing = False
         self.flash_time = 0
-        self.flash_duration = 150
+        self.flash_duration = 1000
         self.health = 3
         self.damage_cooldown = 500
         self.last_hit_time = 0
@@ -83,7 +87,7 @@ class Player(pygame.sprite.Sprite):
         self.health -= 1
         self.is_flashing = True
         self.flash_time = pygame.time.get_ticks()
-        self.image = self.flash_surf
+        self.image = self.hit_surf
  
     def flash_timer(self):
         if self.is_flashing:
