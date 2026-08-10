@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__(groups)
         self.start_x = WINDOW_WIDTH // 2
         self.ground_y = 550
-        self.image = pygame.image.load(join("caoimhe", "Images", 'Player.png')).convert_alpha()
+        self.image = pygame.image.load(join('Leah', 'Player.png')).convert_alpha()
         self.image = pygame.transform.scale(self.image, (250, 250))
         self.rect = self.image.get_rect(midtop=(self.start_x, self.ground_y))
         
@@ -40,10 +40,9 @@ class Player(pygame.sprite.Sprite):
         
         # mask
         self.mask = pygame.mask.from_surface(self.image)
+        # flash
         self.normal_surf = self.image.copy()
-
-        self.flash_surf = self.mask.to_surface(unsetcolor=(0, 0, 0, 0),setcolor=(255, 255, 255, 255))
-
+        self.flash_surf = self.mask.to_surface(unsetcolor=(0, 0, 0, 0), setcolor=(255, 255, 255, 255))
         self.is_flashing = False
         self.flash_time = 0
         self.flash_duration = 150
@@ -54,6 +53,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_speed = -600
         self.velocity_y = 0
         self.on_ground = True
+        
         self.start_x = WINDOW_WIDTH // 2
         
         
@@ -77,19 +77,18 @@ class Player(pygame.sprite.Sprite):
 
         # Keep player in the same x position
         self.rect.centerx = self.start_x
-        self.flash_timer()
 
     def flash(self):
         self.health -= 1
         self.is_flashing = True
         self.flash_time = pygame.time.get_ticks()
-        self.image = self.flash_surf
  
     def flash_timer(self):
         if self.is_flashing:
             if pygame.time.get_ticks() - self.flash_time >= self.flash_duration:
                 self.is_flashing = False  
-                self.image = self.normal_surf
+   
+
 
 def collisions():
     global running
@@ -97,22 +96,13 @@ def collisions():
     collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, False, pygame.sprite.collide_mask)
     if collision_sprites:
         current_time = pygame.time.get_ticks()
-        if current_time - player.last_hit_time >= player.damage_cooldown:
 
+        if current_time - player.last_hit_time >= player.damage_cooldown:
             player.flash()
             player.last_hit_time = current_time
 
-            # Remove one heart
-            if player.health == 2:
-                heart3.kill()
-
-            elif player.health == 1:
-                heart2.kill()
-
-            elif player.health <= 0:
-                heart1.kill()
-                running = False
-
+        if player.health <= 0:
+            running = False
 
 def display_score():
     current_time = pygame.time.get_ticks() // 100
@@ -125,22 +115,12 @@ def display_score():
 
     pygame.draw.rect(screen, (240, 240, 240), text_rect.inflate(20, 10), 4, 10)
 
-
-class Hearticon(pygame.sprite.Sprite): 
-    def __init__(self, position): 
-        super().__init__() 
-        self.image = pygame.image.load(join("caoimhe", "Images", 'hearticon1.png')).convert_alpha() 
-        # Make the hearts a suitable size 
-        self.image = pygame.transform.scale(self.image, (50, 50) ) 
-        # Position 
-        self.rect = self.image.get_rect(topright=position )
-
 # Initialise Pygame
 pygame.init()
 
 
 
-# Screen settings
+# # Screen settings
 WINDOW_WIDTH, WINDOW_HEIGHT = 1000, 500
 WIDTH = 1000
 HEIGHT = 500
@@ -158,26 +138,15 @@ scroll_speed = 10 # Increase for faster scrolling
 clock = pygame.time.Clock()
 
 # #import
-cactus_surf = pygame.image.load(join("caoimhe", "Images", 'Cactus.png')).convert_alpha()
+cactus_surf = pygame.image.load(join('Leah', 'Cactus.png')).convert_alpha()
 cactus_surf = pygame.transform.scale(cactus_surf, (250, 250))
 font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
 text_surf = font.render('text', True, (240,240,240))
 
-
 # #sprites
 all_sprites = pygame.sprite.Group()
 cactus_sprites = pygame.sprite.Group()
-# heart_sprites = pygame.sprite.Group()
-# player = Player(all_sprites)
-# heart = Hearticon()
-# heart_sprites.add(heart)
-heart_sprites = pygame.sprite.Group()
 player = Player(all_sprites)
-heart1 = Hearticon((WINDOW_WIDTH - 10, 10))
-heart2 = Hearticon((WINDOW_WIDTH - 70, 10))
-heart3 = Hearticon((WINDOW_WIDTH - 130, 10))
-heart_sprites.add(heart1, heart2, heart3)
-
 
 cactus_event = pygame.event.custom_type()
 pygame.time.set_timer(cactus_event, 900)
@@ -210,7 +179,6 @@ while running:
      #sprites
     all_sprites.update(dt)
     all_sprites.draw(screen)
-    heart_sprites.draw(screen)
     collisions()
     display_score()
       

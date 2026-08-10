@@ -46,6 +46,7 @@ class Player(pygame.sprite.Sprite):
         # Starting X position
         self.start_x = WINDOW_WIDTH // 2
 
+
         # Ground position
         self.ground_y = WINDOW_HEIGHT
 
@@ -74,6 +75,15 @@ class Player(pygame.sprite.Sprite):
         # MOVEMENT
         # ====================================================
 
+
+        self.ground_y = 550
+        self.image = pygame.image.load(join("caoimhe", "Images", 'Player.png')).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (250, 250))
+        self.rect = self.image.get_rect(midtop=(self.start_x, self.ground_y))
+        
+        
+        # Same positioning method as the cactus
+        # self.rect = self.image.get_rect(midbottom=(self.start_x, self.ground_y))
         self.direction = pygame.Vector2()
 
         self.speed = 300
@@ -394,6 +404,11 @@ scroll_speed = 100
 
 clock = pygame.time.Clock()
 
+# #import
+cactus_surf = pygame.image.load(join("caoimhe", "Images", 'Cactus.png')).convert_alpha()
+cactus_surf = pygame.transform.scale(cactus_surf, (250, 250))
+font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
+text_surf = font.render('text', True, (240,240,240))
 
 # ============================================================
 # MUSHROOM IMAGE
