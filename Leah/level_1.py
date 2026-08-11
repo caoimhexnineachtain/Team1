@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 300
 
         self.hit_surf = pygame.image.load(join('caoimhe', 'images', 'dizzyplayer.png')).convert_alpha()
-        self.hit_surf = pygame.transform.scale(self.hit_surf, (250, 250))
+        self.hit_surf = pygame.transform.scale(self.hit_surf, (250, 250)) 
 
         self.image = self.normal_surf
 
