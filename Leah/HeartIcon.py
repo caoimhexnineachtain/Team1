@@ -17,7 +17,7 @@ class HeartIcon(pygame.sprite.Sprite):
         self.image = self.anim_list[self.anim_index]
         self.rect = self.image.get_rect()
         self.rect.x = 10
-        self.rect.y = WINDOW_HEIGHT - self.rect.height - 30
+        # self.rect.y = WINDOW_HEIGHT - self.rect.height - 30
 
     def update(self):
         if self.frame_duration == 0:
