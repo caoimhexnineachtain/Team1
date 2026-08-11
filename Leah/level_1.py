@@ -56,8 +56,6 @@ class IceCube(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.kill()
  
-        ice_cube_surf = pygame.image.load(join('Leah','ice.cube.png')).convert_alpha()
-        ice_cube_surf = pygame.transform.scale(ice_cube_surf,(80, 80))
 
 def collect_ice_cubes():
  
@@ -89,6 +87,10 @@ class Player(pygame.sprite.Sprite):
         self.image = self.normal_surf
 
         self.rect = self.image.get_rect(midbottom=(self.start_x, self.ground_y))
+
+        self.animation_time = 0
+        self.bob_amount = 5
+        self.bob_speed = 12
 
         # Mask
         self.mask = pygame.mask.from_surface(self.image)
@@ -127,6 +129,27 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = self.start_x
         self.flash_timer()
 
+         # Only animate when on the ground
+        if self.on_ground:
+        
+                    self.animation_time += dt
+        
+                    # Small up/down movement
+                    bob = (
+                        pygame.math.Vector2(0, pygame.math.Vector2(0, self.bob_amount).y))
+        
+                    # Use sine wave for smooth bobbing
+                    import math
+        
+                    bob_offset = (math.sin(self.animation_time * self.bob_speed) * self.bob_amount)
+                    # Keep the bottom of the penguin
+                    # on the ground while bobbing
+                    self.rect.bottom = (self.ground_y + bob_offset)
+        
+        else:
+         # When jumping, don't bob
+            self.animation_time = 0 
+
     def flash(self):
         self.health -= 1
         self.is_flashing = True
@@ -140,7 +163,7 @@ class Player(pygame.sprite.Sprite):
                 self.image = self.normal_surf
 
 def collisions():
-    global running
+    global game_over
 
     collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, False, pygame.sprite.collide_mask)
     if collision_sprites:
@@ -159,7 +182,7 @@ def collisions():
 
             elif player.health <= 0:
                 heart1.kill()
-                running = False
+                game_over = True
 
 
 def display_score():
@@ -182,17 +205,25 @@ def display_score():
  
     screen.blit(ice_text, ice_rect)
 
+
 def reset_game():
  
     global collectable_score
     global bg_x
- 
+    global heart1, heart2, heart3
     # Reset health
     player.health = 3
- 
+
+    heart_sprites.empty()
+    
+    heart1 = Hearticon((WINDOW_WIDTH - 10, 10))
+    heart2 = Hearticon((WINDOW_WIDTH - 70, 10))
+    heart3 = Hearticon((WINDOW_WIDTH - 130, 10))
+
+    heart_sprites.add(heart1, heart2, heart3)
+
     # Reset player position
     player.rect.midbottom = (player.start_x, player.ground_y)
- 
  
     # Reset jump
     player.velocity_y = 0
@@ -202,11 +233,8 @@ def reset_game():
     # Reset score
     collectable_score = 0
  
-    # Remove all hay bales
+    # Remove all obsectals
     cactus_sprites.empty()
- 
-    # Remove all ice cubes
-    ice_cube_sprites.empty()
  
     # Reset background
     bg_x = 0
@@ -216,36 +244,30 @@ def reset_game():
 
 def game_over_screen():
     global game_over
- 
-    while game_over:
-        for event in pygame.event.get():
-# =================================================
- # QUIT
-# =================================================
-         if event.type == pygame.QUIT:
-           pygame.quit()
-        sys.exit()
 
-        if event.type == pygame.KEYDOWN:
+    while game_over:
+
+        for event in pygame.event.get():
+            # Quit window
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            # Keyboard controls
+            if event.type == pygame.KEYDOWN:
                 # Restart
                 if event.key == pygame.K_r:
                     reset_game()
                     game_over = False
- 
                 # Quit
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     sys.exit()
- 
-        # ====================================================
-        # DRAW GAME OVER IMAGE
-        # ====================================================
- 
+        # Draw game over image
         screen.blit(game_over_image, (0, 0))
- 
+
         pygame.display.flip()
- 
-        clock.tick(60)        
+        clock.tick(60)
         
         
 # Initialise Pygame
@@ -258,7 +280,7 @@ WINDOW_WIDTH, WINDOW_HEIGHT = 1000, 500
 WIDTH = 1000
 HEIGHT = 500
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Desert Runner")
+pygame.display.set_caption("Snow Place like Home")
 
 # # Load background
 background = pygame.image.load(join("caoimhe", "Images", "desert_background.png.png")).convert()
@@ -277,6 +299,8 @@ font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
 text_surf = font.render('text', True, (240,240,240))
 game_over_image = pygame.image.load(join('Leah', 'game.over.jpg')).convert_alpha()
 game_over_image = pygame.transform.scale(game_over_image,(WINDOW_WIDTH, WINDOW_HEIGHT))
+ice_cube_surf = pygame.image.load(join('Leah','ice.cube.png')).convert_alpha()
+ice_cube_surf = pygame.transform.scale(ice_cube_surf,(80, 80))
 
 # #sprites
 all_sprites = pygame.sprite.Group()
@@ -289,11 +313,15 @@ heart3 = Hearticon((WINDOW_WIDTH - 130, 10))
 heart_sprites.add(heart1, heart2, heart3)
 ice_cube_sprites = pygame.sprite.Group()
 
+collectable_score = 0
+
 cactus_event = pygame.event.custom_type()
 pygame.time.set_timer(cactus_event, 900)
 
 ice_cube_event = pygame.event.custom_type()
 pygame.time.set_timer(ice_cube_event, 1500)
+
+game_over = False
 running = True
 
 
@@ -311,6 +339,11 @@ while running:
             # Random height
             y = randint(180, 350)
             IceCube(ice_cube_surf,(x, y), (all_sprites, ice_cube_sprites))
+
+        if game_over:
+                game_over_screen()
+                continue
+        
      # Move background
     bg_x -= scroll_speed
 
@@ -326,12 +359,15 @@ while running:
 
      #sprites
     all_sprites.update(dt)
+    collisions()
+    collect_ice_cubes()
     all_sprites.draw(screen)
     heart_sprites.draw(screen)
-    # Remove all ice cubes
-    ice_cube_sprites.empty()
-    collisions()
+
+
+
     display_score()
+   
       
     pygame.display.flip()
    
