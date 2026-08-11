@@ -5,37 +5,50 @@ from random import randint
 
 
 # ============================================================
-# MUSHROOM
+# HAY BALE
 # ============================================================
 
-class Mushroom(pygame.sprite.Sprite):
+class HayBail(pygame.sprite.Sprite):
 
     def __init__(self, surf, pos, groups):
+
         super().__init__(groups)
 
-        self.original_surf = surf
         self.image = surf
 
-        # Put mushroom on the ground
+        # Collision mask
+        self.mask = pygame.mask.from_surface(
+            self.image
+        )
+
+        # Put hay bale on the ground
         self.rect = self.image.get_rect(
             midbottom=pos
         )
 
+        self.ground_y = 550
+
+        
         self.pos = pygame.math.Vector2(
             self.rect.topleft
         )
 
+        # Movement speed
         self.speed = 600
+
 
     def update(self, dt):
 
-        # Move mushroom to the left
+        # Move hay bale from right to left
         self.pos.x -= self.speed * dt
 
-        self.rect.x = round(self.pos.x)
+        self.rect.x = round(
+            self.pos.x
+        )
 
-        # Remove when off screen
+        # Delete when off screen
         if self.rect.right < 0:
+
             self.kill()
 
 
@@ -46,10 +59,17 @@ class Mushroom(pygame.sprite.Sprite):
 class IceCube(pygame.sprite.Sprite):
 
     def __init__(self, surf, pos, groups):
+
         super().__init__(groups)
 
         self.image = surf
 
+        # Collision mask
+        self.mask = pygame.mask.from_surface(
+            self.image
+        )
+
+        # Position
         self.rect = self.image.get_rect(
             center=pos
         )
@@ -58,18 +78,22 @@ class IceCube(pygame.sprite.Sprite):
             self.rect.topleft
         )
 
-        # Same movement speed as the mushrooms
+        # Same speed as hay bales
         self.speed = 600
+
 
     def update(self, dt):
 
-        # Move ice cube towards the penguin
+        # Move towards penguin
         self.pos.x -= self.speed * dt
 
-        self.rect.x = round(self.pos.x)
+        self.rect.x = round(
+            self.pos.x
+        )
 
-        # Remove when it leaves the screen
+        # Remove when off screen
         if self.rect.right < 0:
+
             self.kill()
 
 
@@ -80,34 +104,39 @@ class IceCube(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, groups):
+
         super().__init__(groups)
 
-        # Starting position
+        # Starting X position
         self.start_x = WINDOW_WIDTH // 2
 
         # Ground level
-        self.ground_y = WINDOW_HEIGHT
+        self.ground_y = 550
 
-        # Load penguin
-        self.image = pygame.image.load(
-            join(
-                'Leah',
-                'Player.png'
-            )
-        ).convert_alpha()
+
+        # ====================================================
+        # LOAD PENGUIN
+        # ====================================================
+
+        self.image = pygame.image.load(join('caoimhe', 'Images', 'Player.png')).convert_alpha()
 
         self.image = pygame.transform.scale(
             self.image,
             (250, 250)
         )
 
-        # Put penguin on the ground
+
+        # ====================================================
+        # POSITION
+        # ====================================================
+
         self.rect = self.image.get_rect(
             midbottom=(
                 self.start_x,
                 self.ground_y
             )
         )
+
 
         # ====================================================
         # MOVEMENT
@@ -116,6 +145,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.Vector2()
 
         self.speed = 300
+
 
         # ====================================================
         # JUMP
@@ -129,6 +159,7 @@ class Player(pygame.sprite.Sprite):
 
         self.on_ground = True
 
+
         # ====================================================
         # MASK
         # ====================================================
@@ -136,6 +167,7 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(
             self.image
         )
+
 
         # ====================================================
         # FLASH
@@ -154,6 +186,7 @@ class Player(pygame.sprite.Sprite):
 
         self.flash_duration = 150
 
+
         # ====================================================
         # HEALTH
         # ====================================================
@@ -164,12 +197,18 @@ class Player(pygame.sprite.Sprite):
 
         self.last_hit_time = 0
 
+
+    # ========================================================
+    # UPDATE PLAYER
+    # ========================================================
+
     def update(self, dt):
 
         keys = pygame.key.get_pressed()
 
+
         # ====================================================
-        # LEFT / RIGHT MOVEMENT
+        # LEFT / RIGHT
         # ====================================================
 
         self.direction.x = (
@@ -183,6 +222,7 @@ class Player(pygame.sprite.Sprite):
             * dt
         )
 
+
         # ====================================================
         # JUMP
         # ====================================================
@@ -191,9 +231,11 @@ class Player(pygame.sprite.Sprite):
             keys[pygame.K_SPACE]
             and self.on_ground
         ):
+
             self.velocity_y = self.jump_speed
 
             self.on_ground = False
+
 
         # ====================================================
         # GRAVITY
@@ -207,8 +249,9 @@ class Player(pygame.sprite.Sprite):
             self.velocity_y * dt
         )
 
+
         # ====================================================
-        # GROUND
+        # LAND ON GROUND
         # ====================================================
 
         if self.rect.bottom >= self.ground_y:
@@ -219,18 +262,31 @@ class Player(pygame.sprite.Sprite):
 
             self.on_ground = True
 
+
         # ====================================================
         # KEEP PENGUIN ON SCREEN
         # ====================================================
 
         if self.rect.left < 0:
+
             self.rect.left = 0
 
+
         if self.rect.right > WINDOW_WIDTH:
+
             self.rect.right = WINDOW_WIDTH
 
-        # Flash timer
+
+        # ====================================================
+        # FLASH TIMER
+        # ====================================================
+
         self.flash_timer()
+
+
+    # ========================================================
+    # PLAYER HIT
+    # ========================================================
 
     def flash(self):
 
@@ -239,6 +295,11 @@ class Player(pygame.sprite.Sprite):
         self.is_flashing = True
 
         self.flash_time = pygame.time.get_ticks()
+
+
+    # ========================================================
+    # FLASH TIMER
+    # ========================================================
 
     def flash_timer(self):
 
@@ -249,28 +310,32 @@ class Player(pygame.sprite.Sprite):
                 - self.flash_time
                 >= self.flash_duration
             ):
+
                 self.is_flashing = False
 
 
 # ============================================================
-# COLLISIONS WITH MUSHROOMS
+# HAY BALE COLLISIONS
 # ============================================================
 
 def collisions():
 
-    global running
+    global game_over
 
     collision_sprites = pygame.sprite.spritecollide(
         player,
-        mushroom_sprites,
+        HayBail_sprites,
         False,
         pygame.sprite.collide_mask
     )
+
 
     if collision_sprites:
 
         current_time = pygame.time.get_ticks()
 
+
+        # Damage cooldown
         if (
             current_time
             - player.last_hit_time
@@ -282,12 +347,17 @@ def collisions():
             player.last_hit_time = current_time
 
             print("Penguin hit!")
-            print("Health:", player.health)
 
-        # Game Over
+            print(
+                "Health:",
+                player.health
+            )
+
+
+        # Game over
         if player.health <= 0:
 
-            running = False
+            game_over = True
 
 
 # ============================================================
@@ -305,9 +375,12 @@ def collect_ice_cubes():
         pygame.sprite.collide_mask
     )
 
+
     if collected:
 
-        collectable_score += len(collected)
+        collectable_score += len(
+            collected
+        )
 
         print(
             "Ice cubes:",
@@ -321,8 +394,15 @@ def collect_ice_cubes():
 
 def display_score():
 
-    # Time score
-    current_time = pygame.time.get_ticks() // 100
+    # ========================================================
+    # TIME SCORE
+    # ========================================================
+
+    current_time = (
+        pygame.time.get_ticks()
+        // 100
+    )
+
 
     score_text = font.render(
         "Score: " + str(current_time),
@@ -330,10 +410,13 @@ def display_score():
         (0, 0, 0)
     )
 
+
     score_rect = score_text.get_frect(
         topleft=(20, 20)
     )
 
+
+    # Background
     pygame.draw.rect(
         screen,
         (240, 240, 240),
@@ -342,6 +425,8 @@ def display_score():
         10
     )
 
+
+    # Border
     pygame.draw.rect(
         screen,
         (0, 0, 0),
@@ -349,6 +434,7 @@ def display_score():
         3,
         10
     )
+
 
     screen.blit(
         score_text,
@@ -356,16 +442,22 @@ def display_score():
     )
 
 
-    # Ice cube score
+    # ========================================================
+    # ICE CUBE SCORE
+    # ========================================================
+
     ice_text = font.render(
-        "Ice Cubes: " + str(collectable_score),
+        "Ice Cubes: "
+        + str(collectable_score),
         True,
         (0, 0, 0)
     )
 
+
     ice_rect = ice_text.get_frect(
         topleft=(20, 65)
     )
+
 
     pygame.draw.rect(
         screen,
@@ -375,6 +467,7 @@ def display_score():
         10
     )
 
+
     pygame.draw.rect(
         screen,
         (0, 0, 0),
@@ -382,6 +475,7 @@ def display_score():
         3,
         10
     )
+
 
     screen.blit(
         ice_text,
@@ -390,85 +484,113 @@ def display_score():
 
 
 # ============================================================
-# GAME OVER SCREEN
+# RESET GAME
 # ============================================================
 
-def game_over_screen():
-
-    global running
-
-    game_over = True
-
-    while game_over:
-
-        for event in pygame.event.get():
-
-            if event.type == pygame.QUIT:
-
-                pygame.quit()
-                sys.exit()
-
-            if event.type == pygame.KEYDOWN:
-
-                # Restart
-                if event.key == pygame.K_r:
-
-                    game_over = False
-
-                    restart_game()
-
-                # Quit
-                if event.key == pygame.K_q:
-
-                    pygame.quit()
-                    sys.exit()
-
-
-        # Draw Game Over image
-        screen.blit(
-            game_over_image,
-            (0, 0)
-        )
-
-        pygame.display.flip()
-
-        clock.tick(60)
-
-
-# ============================================================
-# RESTART GAME
-# ============================================================
-
-def restart_game():
+def reset_game():
 
     global collectable_score
+    global bg_x
+
 
     # Reset health
     player.health = 3
 
-    # Reset position
+
+    # Reset player position
     player.rect.midbottom = (
         player.start_x,
         player.ground_y
     )
+
 
     # Reset jump
     player.velocity_y = 0
 
     player.on_ground = True
 
+
     # Reset score
     collectable_score = 0
 
-    # Remove all mushrooms
-    mushroom_sprites.empty()
+
+    # Remove all hay bales
+    HayBail_sprites.empty()
+
 
     # Remove all ice cubes
     ice_cube_sprites.empty()
 
+
     # Reset background
-    global bg_x
     bg_x = 0
+
+
+    # Reset timer
+    pygame.time.set_ticks()
+
+
+# ============================================================
+# GAME OVER SCREEN
+# ============================================================
+
+def game_over_screen():
+
+    global game_over
+
+
+    while game_over:
+
+        for event in pygame.event.get():
+
+
+            # =================================================
+            # QUIT
+            # =================================================
+
+            if event.type == pygame.QUIT:
+
+                pygame.quit()
+
+                sys.exit()
+
+
+            # =================================================
+            # KEYBOARD
+            # =================================================
+
+            if event.type == pygame.KEYDOWN:
+
+
+                # Restart
+                if event.key == pygame.K_r:
+
+                    reset_game()
+
+                    game_over = False
+
+
+                # Quit
+                elif event.key == pygame.K_q:
+
+                    pygame.quit()
+
+                    sys.exit()
+
+
+        # ====================================================
+        # DRAW GAME OVER IMAGE
+        # ====================================================
+
+        screen.blit(
+            game_over_image,
+            (0, 0)
+        )
+
+
+        pygame.display.flip()
+
+        clock.tick(60)
 
 
 # ============================================================
@@ -479,11 +601,13 @@ pygame.init()
 
 
 # ============================================================
-# SCREEN
+# SCREEN SETTINGS
 # ============================================================
 
 WINDOW_WIDTH = 1000
+
 WINDOW_HEIGHT = 500
+
 
 screen = pygame.display.set_mode(
     (
@@ -491,6 +615,7 @@ screen = pygame.display.set_mode(
         WINDOW_HEIGHT
     )
 )
+
 
 pygame.display.set_caption(
     "There's Snow Place Like Home"
@@ -508,6 +633,7 @@ background = pygame.image.load(
         "farm_background.png"
     )
 ).convert()
+
 
 background = pygame.transform.scale(
     background,
@@ -535,19 +661,15 @@ clock = pygame.time.Clock()
 
 
 # ============================================================
-# MUSHROOM IMAGE
+# HAY BALE IMAGE
 # ============================================================
 
-mushroom_surf = pygame.image.load(
-    join(
-        'Leah',
-        'mushroom.png'
-    )
-).convert_alpha()
+HayBail_surf = pygame.image.load(join('caoimhe', 'Images','haybail.png')).convert_alpha()
 
-mushroom_surf = pygame.transform.scale(
-    mushroom_surf,
-    (250, 250)
+
+HayBail_surf = pygame.transform.scale(
+    HayBail_surf,
+    (200, 200)
 )
 
 
@@ -561,6 +683,7 @@ ice_cube_surf = pygame.image.load(
         'ice.cube.png'
     )
 ).convert_alpha()
+
 
 ice_cube_surf = pygame.transform.scale(
     ice_cube_surf,
@@ -578,6 +701,7 @@ game_over_image = pygame.image.load(
         'game.over.jpg'
     )
 ).convert_alpha()
+
 
 game_over_image = pygame.transform.scale(
     game_over_image,
@@ -607,13 +731,13 @@ font = pygame.font.Font(
 
 all_sprites = pygame.sprite.Group()
 
-mushroom_sprites = pygame.sprite.Group()
+HayBail_sprites = pygame.sprite.Group()
 
 ice_cube_sprites = pygame.sprite.Group()
 
 
 # ============================================================
-# PLAYER
+# CREATE PLAYER
 # ============================================================
 
 player = Player(
@@ -622,20 +746,20 @@ player = Player(
 
 
 # ============================================================
-# SCORE
+# ICE CUBE SCORE
 # ============================================================
 
 collectable_score = 0
 
 
 # ============================================================
-# MUSHROOM EVENT
+# HAY BALE EVENT
 # ============================================================
 
-mushroom_event = pygame.event.custom_type()
+HayBail_event = pygame.event.custom_type()
 
 pygame.time.set_timer(
-    mushroom_event,
+    HayBail_event,
     900
 )
 
@@ -653,14 +777,26 @@ pygame.time.set_timer(
 
 
 # ============================================================
-# MAIN GAME
+# GAME OVER VARIABLE
+# ============================================================
+
+game_over = False
+
+
+# ============================================================
+# MAIN GAME LOOP
 # ============================================================
 
 running = True
 
+
 while running:
 
-    # Delta time
+
+    # ========================================================
+    # DELTA TIME
+    # ========================================================
+
     dt = clock.tick(60) / 1000
 
 
@@ -670,41 +806,47 @@ while running:
 
     for event in pygame.event.get():
 
-        # Quit
+
+        # ====================================================
+        # QUIT
+        # ====================================================
+
         if event.type == pygame.QUIT:
 
             running = False
 
 
         # ====================================================
-        # SPAWN MUSHROOM
+        # HAY BALE SPAWN
         # ====================================================
 
-        if event.type == mushroom_event:
+        if event.type == HayBail_event:
 
             x = WINDOW_WIDTH + randint(
                 200,
                 1000
             )
 
-            # Mushroom on ground
+
+            # Ground level
             y = WINDOW_HEIGHT
 
-            Mushroom(
-                mushroom_surf,
+
+            HayBail(
+                HayBail_surf,
                 (
                     x,
                     y
                 ),
                 (
                     all_sprites,
-                    mushroom_sprites
+                    HayBail_sprites
                 )
             )
 
 
         # ====================================================
-        # SPAWN ICE CUBE
+        # ICE CUBE SPAWN
         # ====================================================
 
         if event.type == ice_cube_event:
@@ -714,11 +856,13 @@ while running:
                 1000
             )
 
+
             # Random height
             y = randint(
                 180,
                 350
             )
+
 
             IceCube(
                 ice_cube_surf,
@@ -734,10 +878,24 @@ while running:
 
 
     # ========================================================
+    # GAME OVER
+    # ========================================================
+
+    if game_over:
+
+        game_over_screen()
+
+        continue
+
+
+    # ========================================================
     # MOVE BACKGROUND
     # ========================================================
 
-    bg_x -= scroll_speed * dt
+    bg_x -= (
+        scroll_speed
+        * dt
+    )
 
 
     # Reset background
@@ -758,6 +916,7 @@ while running:
         )
     )
 
+
     screen.blit(
         background,
         (
@@ -775,14 +934,14 @@ while running:
 
 
     # ========================================================
-    # COLLISIONS
+    # HAY BALE COLLISIONS
     # ========================================================
 
     collisions()
 
 
     # ========================================================
-    # COLLECT ICE CUBES
+    # ICE CUBE COLLECTION
     # ========================================================
 
     collect_ice_cubes()
@@ -809,13 +968,6 @@ while running:
     # ========================================================
 
     pygame.display.flip()
-
-
-# ============================================================
-# GAME OVER
-# ============================================================
-
-game_over_screen()
 
 
 # ============================================================

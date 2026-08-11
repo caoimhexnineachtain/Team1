@@ -16,19 +16,28 @@ class Mushroom(pygame.sprite.Sprite):
 
         self.original_surf = surf
         self.image = surf
-        self.rect = self.image.get_rect(center=pos)
-        self.pos = pygame.math.Vector2(self.rect.topleft)
-        self.start_time = pygame.time.get_ticks()
-        self.lifetime = 4000
+
+        # IMPORTANT:
+        # midbottom means the BOTTOM of the mushroom
+        # is placed at the ground position
+        self.rect = self.image.get_rect(
+            midbottom=pos
+        )
+
+        self.pos = pygame.math.Vector2(
+            self.rect.topleft
+        )
+
         self.speed = 600
 
     def update(self, dt):
 
+        # Move mushroom from right to left
         self.pos.x -= self.speed * dt
 
         self.rect.x = round(self.pos.x)
 
-        # Remove mushroom when it leaves the screen
+        # Remove mushroom when it leaves screen
         if self.rect.right < 0:
             self.kill()
 
@@ -46,14 +55,17 @@ class Player(pygame.sprite.Sprite):
         # Starting X position
         self.start_x = WINDOW_WIDTH // 2
 
+        # Ground level
+        self.ground_y = 550
 
-        # Ground position
-        self.ground_y = WINDOW_HEIGHT
+        # ----------------------------------------------------
+        # LOAD PLAYER
+        # ----------------------------------------------------
 
-        # Load player image
         self.image = pygame.image.load(
             join(
-                'Leah',
+                'caoimhe',
+                'Images',
                 'Player.png'
             )
         ).convert_alpha()
@@ -63,7 +75,13 @@ class Player(pygame.sprite.Sprite):
             (250, 250)
         )
 
-        # Put penguin on the ground
+        # Keep original image
+        self.original_image = self.image.copy()
+
+        # ----------------------------------------------------
+        # POSITION PLAYER ON GROUND
+        # ----------------------------------------------------
+
         self.rect = self.image.get_rect(
             midbottom=(
                 self.start_x,
@@ -71,26 +89,17 @@ class Player(pygame.sprite.Sprite):
             )
         )
 
-        # ====================================================
+        # ----------------------------------------------------
         # MOVEMENT
-        # ====================================================
+        # ----------------------------------------------------
 
-
-        self.ground_y = 550
-        self.image = pygame.image.load(join("caoimhe", "Images", 'Player.png')).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (250, 250))
-        self.rect = self.image.get_rect(midtop=(self.start_x, self.ground_y))
-        
-        
-        # Same positioning method as the cactus
-        # self.rect = self.image.get_rect(midbottom=(self.start_x, self.ground_y))
         self.direction = pygame.Vector2()
 
         self.speed = 300
 
-        # ====================================================
-        # GRAVITY
-        # ====================================================
+        # ----------------------------------------------------
+        # JUMP
+        # ----------------------------------------------------
 
         self.gravity = 1200
 
@@ -100,17 +109,27 @@ class Player(pygame.sprite.Sprite):
 
         self.on_ground = True
 
-        # ====================================================
+        # ----------------------------------------------------
+        # RUNNING ANIMATION
+        # ----------------------------------------------------
+
+        self.animation_time = 0
+
+        self.bob_amount = 5
+
+        self.bob_speed = 12
+
+        # ----------------------------------------------------
         # MASK
-        # ====================================================
+        # ----------------------------------------------------
 
         self.mask = pygame.mask.from_surface(
             self.image
         )
 
-        # ====================================================
+        # ----------------------------------------------------
         # FLASH
-        # ====================================================
+        # ----------------------------------------------------
 
         self.normal_surf = self.image.copy()
 
@@ -125,9 +144,9 @@ class Player(pygame.sprite.Sprite):
 
         self.flash_duration = 150
 
-        # ====================================================
+        # ----------------------------------------------------
         # HEALTH
-        # ====================================================
+        # ----------------------------------------------------
 
         self.health = 3
 
@@ -215,6 +234,50 @@ class Player(pygame.sprite.Sprite):
 
 
         # ====================================================
+        # RUNNING ANIMATION
+        # ====================================================
+
+        # Only animate when on the ground
+        if self.on_ground:
+
+            self.animation_time += dt
+
+            # Small up/down movement
+            bob = (
+                pygame.math.Vector2(
+                    0,
+                    pygame.math.Vector2(
+                        0,
+                        self.bob_amount
+                    ).y
+                )
+            )
+
+            # Use sine wave for smooth bobbing
+            import math
+
+            bob_offset = (
+                math.sin(
+                    self.animation_time
+                    * self.bob_speed
+                )
+                * self.bob_amount
+            )
+
+            # Keep the bottom of the penguin
+            # on the ground while bobbing
+            self.rect.bottom = (
+                self.ground_y
+                + bob_offset
+            )
+
+        else:
+
+            # When jumping, don't bob
+            self.animation_time = 0
+
+
+        # ====================================================
         # FLASH TIMER
         # ====================================================
 
@@ -281,9 +344,7 @@ def collisions():
 
             player.last_hit_time = current_time
 
-            print(
-                "Penguin hit!"
-            )
+            print("Penguin hit!")
 
             print(
                 "Health:",
@@ -404,11 +465,6 @@ scroll_speed = 100
 
 clock = pygame.time.Clock()
 
-# #import
-cactus_surf = pygame.image.load(join("caoimhe", "Images", 'Cactus.png')).convert_alpha()
-cactus_surf = pygame.transform.scale(cactus_surf, (250, 250))
-font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
-text_surf = font.render('text', True, (240,240,240))
 
 # ============================================================
 # MUSHROOM IMAGE
@@ -494,7 +550,10 @@ while running:
             running = False
 
 
-        # Mushroom spawn
+        # ====================================================
+        # MUSHROOM SPAWN
+        # ====================================================
+
         if event.type == mushroom_event:
 
             x = WINDOW_WIDTH + randint(
@@ -502,7 +561,9 @@ while running:
                 1000
             )
 
-            # Mushroom sits on bottom of screen
+            # IMPORTANT:
+            # This is the ground level.
+            # The mushroom's MIDBOTTOM is placed here.
             y = WINDOW_HEIGHT
 
             Mushroom(
@@ -595,4 +656,4 @@ while running:
 
 pygame.quit()
 
-sys.exit()       
+sys.exit()
