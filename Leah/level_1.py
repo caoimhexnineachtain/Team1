@@ -296,36 +296,57 @@ def level_cutscene():
     sys.exit()
 
 
+# def start_screen():
+#     global game_start
+
+#     while game_start:
+
+#         for event in pygame.event.get():
+
+#             # Quit window
+#             if event.type == pygame.QUIT:
+#                 pygame.quit()
+#                 sys.exit()
+
+#             # Keyboard controls
+#             if event.type == pygame.KEYDOWN:
+
+#                 # Start game
+#                 if event.key == pygame.K_SPACE:
+#                     game_start = False
+
+#                 # Quit
+#                 elif event.key == pygame.K_q:
+#                     pygame.quit()
+#                     sys.exit()
+
+#         # Draw start screen image
+#         screen.blit(start_screen_image, (0, 0))
+
+#         pygame.display.flip()
+
+#         clock.tick(60)
+
 def start_screen():
     global game_start
 
-    while game_start:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
-        for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                game_start = False
 
-            # Quit window
-            if event.type == pygame.QUIT:
+            elif event.key == pygame.K_q:
                 pygame.quit()
                 sys.exit()
 
-            # Keyboard controls
-            if event.type == pygame.KEYDOWN:
+    screen.blit(start_screen_image, (0, 0))
+    pygame.display.flip()
 
-                # Start game
-                if event.key == pygame.K_SPACE:
-                    game_start = False
 
-                # Quit
-                elif event.key == pygame.K_q:
-                    pygame.quit()
-                    sys.exit()
-
-        # Draw start screen image
-        screen.blit(start_screen_image, (0, 0))
-
-        pygame.display.flip()
-
-        clock.tick(60)
 
                  
 # Initialise Pygame
@@ -398,7 +419,8 @@ running = True
 while running:
       if game_start:
         start_screen()
-
+        clock.tick(60) 
+        continue
 dt = clock.tick(60) / 1000
 
 for event in pygame.event.get():
