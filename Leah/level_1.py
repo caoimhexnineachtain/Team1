@@ -232,12 +232,13 @@ def reset_game():
  
     # Remove all obsectals
     cactus_sprites.empty()
- 
+    ice_cube_sprites.empty()
+    
     # Reset background
     bg_x = 0
 
-    # Reset timer
-    pygame.time.set_ticks()
+    # # Reset timer
+    # pygame.time.set_ticks()
 
 def game_over_screen():
     global game_over
@@ -290,15 +291,43 @@ def level_cutscene():
 
             clock.tick(60)
 
-    # End the game
-    pygame.quit()
-    sys.exit()
-
     # End the game after the third picture
     pygame.quit()
     sys.exit()
 
-           
+
+def start_screen():
+    global game_start
+
+    while game_start:
+
+        for event in pygame.event.get():
+
+            # Quit window
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            # Keyboard controls
+            if event.type == pygame.KEYDOWN:
+
+                # Start game
+                if event.key == pygame.K_SPACE:
+                    game_start = False
+
+                # Quit
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
+
+        # Draw start screen image
+        screen.blit(start_screen_image, (0, 0))
+
+        pygame.display.flip()
+
+        clock.tick(60)
+
+                 
 # Initialise Pygame
 pygame.init()
 
@@ -321,6 +350,9 @@ transition2 = pygame.image.load(join('caoimhe', 'images', 'boat-2.png'))
 transition2 = pygame.transform.scale(transition2, (WINDOW_WIDTH, WINDOW_HEIGHT))
 transition3 = pygame.image.load(join('caoimhe', 'images', 'boat-3.png'))
 transition3 = pygame.transform.scale(transition3, (WINDOW_WIDTH, WINDOW_HEIGHT))
+
+start_screen_image = pygame.image.load(join('caoimhe', 'images', 'start-screen.png'))
+start_screen_image = pygame.transform.scale(start_screen_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 
 # Background scrolling
@@ -359,12 +391,17 @@ ice_cube_event = pygame.event.custom_type()
 pygame.time.set_timer(ice_cube_event, 1500)
 
 game_over = False
+game_start = True
 running = True
 
 
 while running:
-    dt = clock.tick(60) / 1000
-    for event in pygame.event.get():
+      if game_start:
+        start_screen()
+
+dt = clock.tick(60) / 1000
+
+for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == cactus_event:
@@ -382,33 +419,33 @@ while running:
                 continue
         
      # Move background
-    bg_x -= scroll_speed
+        bg_x -= scroll_speed
 
-    # Reset position
-    if bg_x <= -WINDOW_WIDTH:
-        bg_x = 0
+        # Reset position
+        if bg_x <= -WINDOW_WIDTH:
+            bg_x = 0
 
-     # Draw two backgrounds
-    screen.blit(background, (bg_x, 0))
-    screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
+        # Draw two backgrounds
+        screen.blit(background, (bg_x, 0))
+        screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
 
 
 
      #sprites
-    all_sprites.update(dt)
-    collisions()
-    collect_ice_cubes()
-    if collectable_score >= 10:
-        level_cutscene()
-    all_sprites.draw(screen)
-    heart_sprites.draw(screen)
+        all_sprites.update(dt)
+        collisions()
+        collect_ice_cubes()
+        if collectable_score >= 10:
+            level_cutscene()
+        all_sprites.draw(screen)
+        heart_sprites.draw(screen)
 
 
 
-    display_score()
-   
-      
-    pygame.display.flip()
+        display_score()
+    
+        
+        pygame.display.flip()
    
 
 pygame.quit()

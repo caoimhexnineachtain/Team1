@@ -95,6 +95,40 @@ class Player(pygame.sprite.Sprite):
                 self.is_flashing = False  
                 self.image = self.normal_surf
 
+class IceCube(pygame.sprite.Sprite):
+ 
+    def __init__(self, surf, pos, groups):
+        super().__init__(groups)
+        self.image = surf
+ 
+        # Collision mask
+        self.mask = pygame.mask.from_surface(self.image)
+ 
+        # Position
+        self.rect = self.image.get_rect(center=pos)
+ 
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+ 
+        # Same speed as hay bales
+        self.speed = 600
+    def update(self, dt):
+        # Move towards penguin
+        self.pos.x -= self.speed * dt
+ 
+        self.rect.x = round(self.pos.x)
+ 
+        # Remove when off screen
+        if self.rect.right < 0:
+            self.kill()
+
+def collect_ice_cubes():
+ 
+        global collectable_score
+ 
+        collected = pygame.sprite.spritecollide(player, ice_cube_sprites, True, pygame.sprite.collide_mask)
+        if collected: collectable_score += len(collected)
+        print("Ice cubes:", collectable_score)
+
 def collisions():
     global running
 
@@ -129,6 +163,77 @@ def display_score():
 
     pygame.draw.rect(screen, (240, 240, 240), text_rect.inflate(20, 10), 4, 10)
 
+    ice_text = font.render("Ice Cubes: " + str(collectable_score), True, (0, 0, 0))
+     
+    ice_rect = ice_text.get_frect(topleft=(20, 65))
+    pygame.draw.rect(screen, (240, 240, 240), ice_rect.inflate(20, 10), 0, 10)
+     
+    pygame.draw.rect(screen,(0, 0, 0), ice_rect.inflate(20, 10), 3, 10)
+     
+    screen.blit(ice_text, ice_rect)
+
+def reset_game():
+ 
+    global collectable_score
+    global bg_x
+    global heart1, heart2, heart3
+    # Reset health
+    player.health = 3
+
+    heart_sprites.empty()
+    
+    heart1 = Hearticon((WINDOW_WIDTH - 10, 10))
+    heart2 = Hearticon((WINDOW_WIDTH - 70, 10))
+    heart3 = Hearticon((WINDOW_WIDTH - 130, 10))
+
+    heart_sprites.add(heart1, heart2, heart3)
+
+    # Reset player position
+    player.rect.midbottom = (player.start_x, player.ground_y)
+ 
+    # Reset jump
+    player.velocity_y = 0
+ 
+    player.on_ground = True
+ 
+    # Reset score
+    collectable_score = 0
+ 
+    # Remove all obsectals
+    alien_sprites.empty()
+ 
+    # Reset background
+    bg_x = 0
+
+    # Reset timer
+    pygame.time.set_ticks()
+
+def game_over_screen():
+    global game_over
+
+    while game_over:
+
+        for event in pygame.event.get():
+            # Quit window
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            # Keyboard controls
+            if event.type == pygame.KEYDOWN:
+                # Restart
+                if event.key == pygame.K_r:
+                    reset_game()
+                    game_over = False
+                # Quit
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
+        # Draw game over image
+        screen.blit(game_over_image, (0, 0))
+
+        pygame.display.flip()
+        clock.tick(60)
 
 class Hearticon(pygame.sprite.Sprite): 
     def __init__(self, position): 
@@ -166,7 +271,10 @@ alien_surf = pygame.image.load(join("caoimhe", "Images", 'alien.png')).convert_a
 alien_surf = pygame.transform.scale(alien_surf, (250, 250))
 font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
 text_surf = font.render('text', True, (240,240,240))
-
+ice_cube_surf = pygame.image.load(join('Leah','ice.cube.png')).convert_alpha()
+ice_cube_surf = pygame.transform.scale(ice_cube_surf,(80, 80))
+game_over_image = pygame.image.load(join('Leah', 'game.over.jpg')).convert_alpha()
+game_over_image = pygame.transform.scale(game_over_image,(WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # #sprites
 all_sprites = pygame.sprite.Group()
@@ -177,10 +285,18 @@ heart1 = Hearticon((WINDOW_WIDTH - 10, 10))
 heart2 = Hearticon((WINDOW_WIDTH - 70, 10))
 heart3 = Hearticon((WINDOW_WIDTH - 130, 10))
 heart_sprites.add(heart1, heart2, heart3)
+ice_cube_sprites = pygame.sprite.Group()
+
+collectable_score = 0
 
 
 cactus_event = pygame.event.custom_type()
 pygame.time.set_timer(cactus_event, 900)
+
+ice_cube_event = pygame.event.custom_type()
+pygame.time.set_timer(ice_cube_event, 1500)
+
+game_over = False
 running = True
 
 
@@ -193,6 +309,15 @@ while running:
          x = WINDOW_WIDTH + randint(200, 1000)
          y = 540
          Alien(alien_surf, (x, y), (all_sprites, alien_sprites))
+        if event.type == ice_cube_event:
+                     x = WINDOW_WIDTH + randint(200, 1000)
+                     # Random height
+                     y = randint(180, 350)
+                     IceCube(ice_cube_surf,(x, y), (all_sprites, ice_cube_sprites))
+
+        if game_over:
+                    game_over_screen()
+                    continue
     
      # Move background
     bg_x -= scroll_speed
@@ -205,15 +330,14 @@ while running:
     screen.blit(background, (bg_x, 0))
     screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
 
-
-
      #sprites
     all_sprites.update(dt)
     all_sprites.draw(screen)
+    collect_ice_cubes()
     heart_sprites.draw(screen)
     collisions()
     display_score()
-      
+    
     pygame.display.flip()
    
 
