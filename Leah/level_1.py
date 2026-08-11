@@ -55,15 +55,6 @@ class IceCube(pygame.sprite.Sprite):
         # Remove when off screen
         if self.rect.right < 0:
             self.kill()
- 
-
-def collect_ice_cubes():
- 
-        global collectable_score
- 
-        collected = pygame.sprite.spritecollide(player, ice_cube_sprites, True, pygame.sprite.collide_mask)
-        if collected: collectable_score += len(collected)
-        print("Ice cubes:", collectable_score)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups):
@@ -184,6 +175,13 @@ def collisions():
                 heart1.kill()
                 game_over = True
 
+def collect_ice_cubes():
+ 
+        global collectable_score
+ 
+        collected = pygame.sprite.spritecollide(player, ice_cube_sprites, True, pygame.sprite.collide_mask)
+        if collected: collectable_score += len(collected)
+        print("Ice cubes:", collectable_score)
 
 def display_score():
     current_time = pygame.time.get_ticks() // 100
@@ -204,7 +202,6 @@ def display_score():
     pygame.draw.rect(screen,(0, 0, 0), ice_rect.inflate(20, 10), 3, 10)
  
     screen.blit(ice_text, ice_rect)
-
 
 def reset_game():
  
@@ -269,7 +266,39 @@ def game_over_screen():
         pygame.display.flip()
         clock.tick(60)
         
-        
+def level_cutscene():
+    pictures = [transition1, transition2, transition3]
+
+    # How long each picture stays on screen (milliseconds)
+    durations = [2000, 2000, 5000]
+
+    for picture, duration in zip(pictures, durations):
+
+        start_time = pygame.time.get_ticks()
+
+        while pygame.time.get_ticks() - start_time < duration:
+
+            for event in pygame.event.get():
+
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            # Show picture
+            screen.blit(picture, (0, 0))
+
+            pygame.display.flip()
+
+            clock.tick(60)
+
+    # End the game
+    pygame.quit()
+    sys.exit()
+
+    # End the game after the third picture
+    pygame.quit()
+    sys.exit()
+
+           
 # Initialise Pygame
 pygame.init()
 
@@ -286,7 +315,15 @@ pygame.display.set_caption("Snow Place like Home")
 background = pygame.image.load(join("caoimhe", "Images", "desert_background.png.png")).convert()
 background = pygame.transform.scale(background, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
-# # Background scrolling
+transition1 = pygame.image.load(join('caoimhe', 'images', 'boat-1.png'))
+transition1 = pygame.transform.scale(transition1, (WINDOW_WIDTH, WINDOW_HEIGHT))
+transition2 = pygame.image.load(join('caoimhe', 'images', 'boat-2.png'))
+transition2 = pygame.transform.scale(transition2, (WINDOW_WIDTH, WINDOW_HEIGHT))
+transition3 = pygame.image.load(join('caoimhe', 'images', 'boat-3.png'))
+transition3 = pygame.transform.scale(transition3, (WINDOW_WIDTH, WINDOW_HEIGHT))
+
+
+# Background scrolling
 bg_x = 0
 scroll_speed = 10 # Increase for faster scrolling
 
@@ -302,7 +339,7 @@ game_over_image = pygame.transform.scale(game_over_image,(WINDOW_WIDTH, WINDOW_H
 ice_cube_surf = pygame.image.load(join('Leah','ice.cube.png')).convert_alpha()
 ice_cube_surf = pygame.transform.scale(ice_cube_surf,(80, 80))
 
-# #sprites
+#sprites
 all_sprites = pygame.sprite.Group()
 cactus_sprites = pygame.sprite.Group()
 heart_sprites = pygame.sprite.Group()
@@ -361,6 +398,8 @@ while running:
     all_sprites.update(dt)
     collisions()
     collect_ice_cubes()
+    if collectable_score >= 10:
+        level_cutscene()
     all_sprites.draw(screen)
     heart_sprites.draw(screen)
 
