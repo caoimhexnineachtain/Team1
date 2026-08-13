@@ -181,6 +181,78 @@ class Player(pygame.sprite.Sprite):
                 self.is_flashing = False  
                 self.image = self.normal_surf
 
+class Cowboy(pygame.sprite.Sprite):
+
+    def __init__(self, surf, pos, groups, mode="leaving"):
+        super().__init__(groups)
+
+        self.image = surf
+        self.ground_y = 590
+
+        self.rect = self.image.get_rect(
+            midbottom=(pos[0], self.ground_y)
+        )
+
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+
+        # Cowboy's current behaviour
+        self.mode = mode
+
+        # Movement speeds
+        self.leaving_speed = -100
+        self.rescue_speed = 400
+
+        # Bobbing
+        self.animation_time = 0
+        self.bob_amount = 5
+        self.bob_speed = 12
+
+    def update(self, dt):
+
+        # --------------------------------
+        # COWBOY LEAVING AT START
+        # --------------------------------
+        if self.mode == "leaving":
+
+            # Slowly move left
+            self.pos.x += self.leaving_speed * dt
+            self.rect.x = round(self.pos.x)
+
+            # Remove when off left side
+            if self.rect.right < 0:
+                self.kill()
+
+        # --------------------------------
+        # COWBOY COMING TO PLAYER AFTER DEATH
+        # --------------------------------
+        elif self.mode == "catch":
+
+            # Move right
+            self.pos.x += self.rescue_speed * dt
+            self.rect.x = round(self.pos.x)
+
+            # Stop in middle of screen
+            if self.rect.centerx >= WINDOW_WIDTH // 2:
+
+                self.rect.centerx = WINDOW_WIDTH // 2
+                self.pos.x = self.rect.x
+                self.rescue_speed = 0
+
+        # --------------------------------
+        # BOBBING
+        # --------------------------------
+
+        self.animation_time += dt
+
+        import math
+
+        bob_offset = (
+            math.sin(self.animation_time * self.bob_speed)
+            * self.bob_amount
+        )
+
+        self.rect.bottom = self.ground_y + bob_offset
+
 def collisions():
     global game_over
     if player.is_dead:
@@ -215,9 +287,8 @@ def collect_ice_cubes():
         collected = pygame.sprite.spritecollide(player, ice_cube_sprites, True, pygame.sprite.collide_mask)
         if collected: collectable_score += len(collected)
         
-
 def display_score():
-    current_time = pygame.time.get_ticks() // 100
+    current_time = (pygame.time.get_ticks() - game_start_time) // 100
     text_surf = font.render(str(current_time), True, (0, 0, 0))
 
     # Top left position
@@ -244,6 +315,9 @@ def reset_game():
     # Reset health
     player.health = 3
     player.is_dead = False
+    global game_start_time
+    
+
     player.death_time = 0
     player.image = player.normal_surf
 
@@ -265,6 +339,8 @@ def reset_game():
  
     # Reset score
     collectable_score = 0
+    game_start_time = pygame.time.get_ticks()
+    
  
     # Remove all obstacles completely
     for sprite in list(cactus_sprites):
@@ -276,11 +352,15 @@ def reset_game():
     # Reset background
     bg_x = 0
 
-    # # Reset timer
-    # pygame.time.set_ticks()
+    global cowboy_spawned
+    cowboy_spawned = False
+    for sprite in list(cowboy_sprites):
+        sprite.kill()
 
 def game_over_screen():
     global game_over
+    global game_start 
+    global game_start_time
 
     while game_over:
 
@@ -336,6 +416,7 @@ def level_cutscene():
 
 def start_screen():
     global game_start
+    global game_start_time
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -343,8 +424,10 @@ def start_screen():
             sys.exit()
 
         if event.type == pygame.KEYDOWN:
+
             if event.key == pygame.K_SPACE:
                 game_start = False
+                game_start_time = pygame.time.get_ticks()
 
             elif event.key == pygame.K_q:
                 pygame.quit()
@@ -354,11 +437,9 @@ def start_screen():
     pygame.display.flip()
 
 
-
-                 
+             
 # Initialise Pygame
 pygame.init()
-
 
 
 # Screen settings
@@ -379,13 +460,13 @@ transition2 = pygame.transform.scale(transition2, (WINDOW_WIDTH, WINDOW_HEIGHT))
 transition3 = pygame.image.load(join('caoimhe', 'Images', 'boat-3.png'))
 transition3 = pygame.transform.scale(transition3, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
-start_screen_image = pygame.image.load(join('caoimhe', 'images', 'start-screen.png'))
+start_screen_image = pygame.image.load(join('caoimhe', 'images', 'startscreen.png'))
 start_screen_image = pygame.transform.scale(start_screen_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 
 # Background scrolling
 bg_x = 0
-scroll_speed = 10 # Increase for faster scrolling
+scroll_speed = 600 # Increase for faster scrolling
 
 clock = pygame.time.Clock()
 
@@ -398,7 +479,8 @@ game_over_image = pygame.image.load(join('Leah', 'game.over.jpg')).convert_alpha
 game_over_image = pygame.transform.scale(game_over_image,(WINDOW_WIDTH, WINDOW_HEIGHT))
 ice_cube_surf = pygame.image.load(join('Leah','ice.cube.png')).convert_alpha()
 ice_cube_surf = pygame.transform.scale(ice_cube_surf,(80, 80))
-
+cowboy_surf = pygame.image.load(join("caoimhe", "Images", "cowboy.png")).convert_alpha()
+cowboy_surf = pygame.transform.scale(cowboy_surf,(350, 350))
 
 #sprites
 all_sprites = pygame.sprite.Group()
@@ -410,6 +492,13 @@ heart2 = Hearticon((WINDOW_WIDTH - 70, 10))
 heart3 = Hearticon((WINDOW_WIDTH - 130, 10))
 heart_sprites.add(heart1, heart2, heart3)
 ice_cube_sprites = pygame.sprite.Group()
+cowboy_sprites = pygame.sprite.Group()
+Cowboy(
+    cowboy_surf,
+    (250, 550),
+    (all_sprites, cowboy_sprites),
+    mode="leaving"
+)
 
 collectable_score = 0
 
@@ -422,90 +511,8 @@ pygame.time.set_timer(ice_cube_event, 2200)
 game_over = False
 game_start = True
 running = True
+cowboy_spawned = False
 
-
-# while running:
-
-#     # ---------------- START SCREEN ----------------
-#     if game_start:
-#         start_screen()
-#         clock.tick(60)
-#         continue
-
-#     # ---------------- GAME OVER ----------------
-#     if game_over:
-#         game_over_screen()
-#         continue
-
-#     # ---------------- DELTA TIME ----------------
-#     dt = clock.tick(60) / 1000
-
-#     # ---------------- EVENTS ----------------
-#     for event in pygame.event.get():
-
-#         if event.type == pygame.QUIT:
-#             running = False
-
-#         elif event.type == cactus_event:
-#             x = WINDOW_WIDTH + randint(200, 1000)
-#             y = 500
-
-#             Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
-
-#         elif event.type == ice_cube_event:
-#             x = WINDOW_WIDTH + randint(200, 1000)
-#             y = randint(180, 350)
-
-#             IceCube(ice_cube_surf, (x, y), (all_sprites, ice_cube_sprites))
-
-#     # ---------------- UPDATE GAME ----------------
-
-#     # Only move the game while the player is alive
-#     if not player.is_dead:
-
-#         # Move background
-#         bg_x -= scroll_speed
-
-#         if bg_x <= -WINDOW_WIDTH:
-#             bg_x = 0
-
-#         # Update player, cacti and ice cubes
-#         all_sprites.update(dt)
-
-#         # Check collisions
-#         collisions()
-#         collect_ice_cubes()
-
-
-#     # ---------------- DRAW ----------------
-
-#     screen.blit(background, (bg_x, 0))
-#     screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
-
-#     all_sprites.draw(screen)
-#     heart_sprites.draw(screen)
-
-#     display_score()
-
-#         # ---------------- DEATH ----------------
-
-#     if player.is_dead:
-#         if pygame.time.get_ticks() - player.death_time >= player.death_duration:
-#             game_over = True
-
-#         # ---------------- LEVEL CUTSCENE ----------------
-
-#         if collectable_score >= 10:
-#             level_cutscene()
-
-#         # ---------------- DRAW ----------------
-
-#         all_sprites.draw(screen)
-#         heart_sprites.draw(screen)
-
-#         display_score()
-
-#         pygame.display.flip()
 
 while running:
 
@@ -567,6 +574,10 @@ while running:
 
         # Collect ice cubes
         collect_ice_cubes()
+    else:
+
+    # Keep cowboy moving after player dies
+        cowboy_sprites.update(dt)
 
     # ---------------- DRAW ----------------
 
@@ -583,13 +594,27 @@ while running:
 
     # ---------------- LEVEL COMPLETE ----------------
 
-    if collectable_score >= 10:
+    if collectable_score >= 5 and not player.is_dead:
         level_cutscene()
 
     # ---------------- DEATH ----------------
 
+
     if player.is_dead:
 
+    # Spawn cowboy once
+        if not cowboy_spawned:
+
+            Cowboy(
+            cowboy_surf,
+            (-100, 600),
+            (all_sprites, cowboy_sprites),
+            mode='catch'
+        )
+
+        cowboy_spawned = True
+
+     # Wait before showing game over
         if pygame.time.get_ticks() - player.death_time >= player.death_duration:
             game_over = True
 
