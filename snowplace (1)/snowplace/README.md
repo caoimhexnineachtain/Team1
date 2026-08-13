@@ -1,4 +1,4 @@
-# There's Snow Place Like Home — Website
+# Snow Place Like Home — Website
 
 ## Quick Start
 
@@ -36,6 +36,5 @@ snowplace/
 | POST | /api/contact | Submit a contact message |
 | GET  | /api/reviews | Fetch all reviews |
 | POST | /api/reviews | Submit a review |
-| POST | /api/quiz | Save a quiz result |
 | GET  | /api/leaderboard | Fetch leaderboard |
 | POST | /api/leaderboard | Submit a leaderboard score |

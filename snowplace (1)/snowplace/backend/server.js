@@ -38,14 +38,6 @@ db.exec(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
-  CREATE TABLE IF NOT EXISTS quiz_results (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    player_name TEXT NOT NULL,
-    score INTEGER NOT NULL,
-    total_questions INTEGER NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
-
   CREATE TABLE IF NOT EXISTS leaderboard (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     player_name TEXT NOT NULL,
@@ -107,18 +99,6 @@ app.post('/api/reviews', (req, res) => {
   );
   stmt.run(sanitize(name), r, sanitize(review), sanitize(favourite_level || ''));
   res.json({ success: true, message: 'Review submitted! Thank you.' });
-});
-
-// ── QUIZ RESULTS routes ────────────────────────────────────────
-app.post('/api/quiz', (req, res) => {
-  const { player_name, score, total_questions } = req.body;
-  if (!player_name || score === undefined || !total_questions) {
-    return res.status(400).json({ error: 'player_name, score, and total_questions required.' });
-  }
-  db.prepare(
-    'INSERT INTO quiz_results (player_name, score, total_questions) VALUES (?, ?, ?)'
-  ).run(sanitize(player_name), parseInt(score), parseInt(total_questions));
-  res.json({ success: true });
 });
 
 // ── LEADERBOARD routes ─────────────────────────────────────────

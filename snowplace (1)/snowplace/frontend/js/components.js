@@ -14,7 +14,6 @@
       <a href="how-to-play.html">How to Play</a>
       <a href="endless.html">Endless Mode</a>
       <a href="about.html">About Us</a>
-      <a href="quiz.html" class="nav-cta">Quiz 🎯</a>
       <a href="reviews.html">Reviews</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -27,7 +26,6 @@
     <a href="how-to-play.html">How to Play</a>
     <a href="endless.html">Endless Mode</a>
     <a href="about.html">About Us</a>
-    <a href="quiz.html">Quiz 🎯</a>
     <a href="reviews.html">Reviews</a>
     <a href="contact.html">Contact</a>
     <a href="faq.html">FAQ</a>
@@ -40,7 +38,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <h3>🐧 There's <span>Snow Place</span> Like Home</h3>
+        <h3>🐧 <span>Snow Place</span> Like Home</h3>
         <p>One penguin. Three worlds. One journey home. Can you make it back to the Arctic?</p>
       </div>
       <div class="footer-col">
@@ -53,7 +51,6 @@
       <div class="footer-col">
         <h4>Explore</h4>
         <a href="about.html">About Us</a>
-        <a href="quiz.html">Quiz</a>
         <a href="reviews.html">Reviews</a>
         <a href="gallery.html">Gallery</a>
       </div>
@@ -64,7 +61,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 There's Snow Place Like Home · Student Game Development Project</p>
+      <p>© 2025 Snow Place Like Home · Student Game Development Project</p>
       <p>🐧 One penguin. Three worlds. One journey home.</p>
     </div>
   </div>

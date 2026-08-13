@@ -1,8 +1,8 @@
 /* quiz.js — 15-question interactive quiz */
 const questions = [
   { q: "What is the name of the game?",
-    opts: ["Penguin's Adventure","There's Snow Place Like Home","Arctic Runner","Ice Escape"],
-    ans: 1, exp: "<strong>There's Snow Place Like Home</strong> — a penguin adventure game about making it back to the Arctic." },
+    opts: ["Penguin's Adventure","Snow Place Like Home","Arctic Runner","Ice Escape"],
+    ans: 1, exp: "<strong>Snow Place Like Home</strong> — a penguin adventure game about making it back to the Arctic." },
 
   { q: "Who is the main character of the game?",
     opts: ["A polar bear","A cowboy","A penguin","A seal"],
@@ -58,7 +58,7 @@ const questions = [
 
   { q: "How many developers created this game and website?",
     opts: ["1","2","3","4"],
-    ans: 3, exp: "There's Snow Place Like Home was created by a team of <strong>four student developers</strong>." }
+    ans: 3, exp: "Snow Place Like Home was created by a team of <strong>four student developers</strong>." }
 ];
 
 let qIndex = 0, qScore = 0, answered = false;
@@ -128,7 +128,7 @@ function showResult() {
   if (qScore <= 5)       { badge='🐧 Penguin Beginner!';   title='Nice try!';          sub="Keep exploring the website and try again — you'll know the answers next time!"; }
   else if (qScore <= 10) { badge='🌊 Arctic Adventurer!';  title='Good effort!';       sub="You clearly know the basics. A bit more practice and you'll ace it!"; }
   else if (qScore <= 13) { badge='🧊 Penguin Pro!';        title='Impressive!';        sub="You really know your stuff! Only the elite players score this high."; }
-  else                   { badge='🏔️ HOMEWARD HERO!';      title='PERFECT (or near)!'; sub="Incredible! You know everything about There's Snow Place Like Home. The penguin salutes you!"; }
+  else                   { badge='🏔️ HOMEWARD HERO!';      title='PERFECT (or near)!'; sub="Incredible! You know everything about Snow Place Like Home. The penguin salutes you!"; }
 
   document.getElementById('resBadge').textContent = badge;
   document.getElementById('resTitle').textContent = title;
