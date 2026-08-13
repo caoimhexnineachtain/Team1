@@ -374,9 +374,9 @@ background = pygame.transform.scale(background, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 transition1 = pygame.image.load(join('caoimhe', 'Images', 'boat-1.png'))
 transition1 = pygame.transform.scale(transition1, (WINDOW_WIDTH, WINDOW_HEIGHT))
-transition2 = pygame.image.load(join('caoimhe', 'images', 'boat-2.png'))
+transition2 = pygame.image.load(join('caoimhe', 'Images', 'boat-2.png'))
 transition2 = pygame.transform.scale(transition2, (WINDOW_WIDTH, WINDOW_HEIGHT))
-transition3 = pygame.image.load(join('caoimhe', 'images', 'boat-3.png'))
+transition3 = pygame.image.load(join('caoimhe', 'Images', 'boat-3.png'))
 transition3 = pygame.transform.scale(transition3, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 start_screen_image = pygame.image.load(join('caoimhe', 'images', 'start-screen.png'))
@@ -424,6 +424,89 @@ game_start = True
 running = True
 
 
+# while running:
+
+#     # ---------------- START SCREEN ----------------
+#     if game_start:
+#         start_screen()
+#         clock.tick(60)
+#         continue
+
+#     # ---------------- GAME OVER ----------------
+#     if game_over:
+#         game_over_screen()
+#         continue
+
+#     # ---------------- DELTA TIME ----------------
+#     dt = clock.tick(60) / 1000
+
+#     # ---------------- EVENTS ----------------
+#     for event in pygame.event.get():
+
+#         if event.type == pygame.QUIT:
+#             running = False
+
+#         elif event.type == cactus_event:
+#             x = WINDOW_WIDTH + randint(200, 1000)
+#             y = 500
+
+#             Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
+
+#         elif event.type == ice_cube_event:
+#             x = WINDOW_WIDTH + randint(200, 1000)
+#             y = randint(180, 350)
+
+#             IceCube(ice_cube_surf, (x, y), (all_sprites, ice_cube_sprites))
+
+#     # ---------------- UPDATE GAME ----------------
+
+#     # Only move the game while the player is alive
+#     if not player.is_dead:
+
+#         # Move background
+#         bg_x -= scroll_speed
+
+#         if bg_x <= -WINDOW_WIDTH:
+#             bg_x = 0
+
+#         # Update player, cacti and ice cubes
+#         all_sprites.update(dt)
+
+#         # Check collisions
+#         collisions()
+#         collect_ice_cubes()
+
+
+#     # ---------------- DRAW ----------------
+
+#     screen.blit(background, (bg_x, 0))
+#     screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
+
+#     all_sprites.draw(screen)
+#     heart_sprites.draw(screen)
+
+#     display_score()
+
+#         # ---------------- DEATH ----------------
+
+#     if player.is_dead:
+#         if pygame.time.get_ticks() - player.death_time >= player.death_duration:
+#             game_over = True
+
+#         # ---------------- LEVEL CUTSCENE ----------------
+
+#         if collectable_score >= 10:
+#             level_cutscene()
+
+#         # ---------------- DRAW ----------------
+
+#         all_sprites.draw(screen)
+#         heart_sprites.draw(screen)
+
+#         display_score()
+
+#         pygame.display.flip()
+
 while running:
 
     # ---------------- START SCREEN ----------------
@@ -446,66 +529,72 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        elif event.type == cactus_event:
-            x = WINDOW_WIDTH + randint(200, 1000)
+        elif event.type == cactus_event and not player.is_dead:
+            x = WINDOW_WIDTH + randint(200, 400)
             y = 500
 
-            Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
+            Cactus(
+                cactus_surf,
+                (x, y),
+                (all_sprites, cactus_sprites)
+            )
 
-        elif event.type == ice_cube_event:
-            x = WINDOW_WIDTH + randint(200, 1000)
+        elif event.type == ice_cube_event and not player.is_dead:
+            x = WINDOW_WIDTH + randint(200, 600)
             y = randint(180, 350)
 
-            IceCube(ice_cube_surf, (x, y), (all_sprites, ice_cube_sprites))
+            IceCube(
+                ice_cube_surf,
+                (x, y),
+                (all_sprites, ice_cube_sprites)
+            )
 
     # ---------------- UPDATE GAME ----------------
 
-    # Only move the game while the player is alive
     if not player.is_dead:
 
-        # Move background
-        bg_x -= scroll_speed
+        # Background movement
+        bg_x -= scroll_speed * dt
 
         if bg_x <= -WINDOW_WIDTH:
-            bg_x = 0
+            bg_x += WINDOW_WIDTH
 
-        # Update player, cacti and ice cubes
+        # Update sprites
         all_sprites.update(dt)
 
-        # Check collisions
+        # Collisions
         collisions()
-        collect_ice_cubes()
 
+        # Collect ice cubes
+        collect_ice_cubes()
 
     # ---------------- DRAW ----------------
 
     screen.blit(background, (bg_x, 0))
-    screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
+    screen.blit(
+        background,
+        (bg_x + WINDOW_WIDTH, 0)
+    )
 
     all_sprites.draw(screen)
     heart_sprites.draw(screen)
 
     display_score()
 
-        # ---------------- DEATH ----------------
+    # ---------------- LEVEL COMPLETE ----------------
+
+    if collectable_score >= 10:
+        level_cutscene()
+
+    # ---------------- DEATH ----------------
 
     if player.is_dead:
+
         if pygame.time.get_ticks() - player.death_time >= player.death_duration:
             game_over = True
 
-        # ---------------- LEVEL CUTSCENE ----------------
+    pygame.display.flip()
 
-        if collectable_score >= 10:
-            level_cutscene()
-
-        # ---------------- DRAW ----------------
-
-        all_sprites.draw(screen)
-        heart_sprites.draw(screen)
-
-        display_score()
-
-        pygame.display.flip()
 
 pygame.quit()
 sys.exit()
