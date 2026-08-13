@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Contact | There's Snow Place Like Home</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="theme-farm">
+<div id="nav-placeholder"></div>
+
+<div class="page-header" data-emoji="📬">
+  <div class="container">
+    <div class="tag">Get In Touch</div>
+    <h1>Contact Us</h1>
+    <p>Questions about the game? Feedback for the team? Drop us a message below.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal-left">
+        <div style="background:#fff;border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-lg);max-width:560px;">
+          <div class="tag">Send a Message</div>
+          <h2 style="font-size:1.4rem;font-weight:800;color:var(--blue-dark);margin-bottom:20px;">We'd Love to Hear From You</h2>
+          <div id="contactMsg" class="form-msg"></div>
+          <form class="contact-form" id="contactForm" onsubmit="submitContact(event)">
+            <div class="form-group">
+              <label for="cName">Your Name *</label>
+              <input type="text" id="cName" name="name" placeholder="Enter your name" required maxlength="100"/>
+            </div>
+            <div class="form-group">
+              <label for="cEmail">Email Address *</label>
+              <input type="email" id="cEmail" name="email" placeholder="your@email.com" required maxlength="200"/>
+            </div>
+            <div class="form-group">
+              <label for="cSubject">Subject *</label>
+              <input type="text" id="cSubject" name="subject" placeholder="What's this about?" required maxlength="200"/>
+            </div>
+            <div class="form-group">
+              <label for="cMessage">Message *</label>
+              <textarea id="cMessage" name="message" placeholder="Type your message here..." required maxlength="2000"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="cSubmitBtn">📬 Send Message</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="reveal-right">
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:var(--radius-lg);padding:32px;color:#fff;">
+            <h3 style="color:var(--gold);font-size:1.1rem;font-weight:800;margin-bottom:16px;">🐧 About This Project</h3>
+            <p style="font-size:.9rem;line-height:1.7;opacity:.88;margin-bottom:14px;">There's Snow Place Like Home is a student game development project. We're a team of four developers who designed, built and launched this game as part of our studies.</p>
+            <p style="font-size:.9rem;line-height:1.7;opacity:.88;">Whether you have a question about the game, feedback to share or just want to say hello — feel free to reach out!</p>
+          </div>
+          <div style="background:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);">
+            <h3 style="font-size:1rem;font-weight:800;color:var(--blue-dark);margin-bottom:14px;">💬 Common Questions</h3>
+            <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;margin-bottom:10px;"><strong>Questions about the game?</strong><br>Check our <a href="faq.html" style="color:var(--blue);">FAQ page</a> — it covers most common queries.</p>
+            <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;margin-bottom:10px;"><strong>Want to leave a review?</strong><br>Head to our <a href="reviews.html" style="color:var(--blue);">Reviews page</a> to share your experience.</p>
+            <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;"><strong>Response time:</strong><br>We aim to respond to all messages within a few days.</p>
+          </div>
+          <div style="background:var(--arctic);border-radius:var(--radius);padding:20px;text-align:center;">
+            <div style="font-size:2.5rem;margin-bottom:8px;" class="float">🐧</div>
+            <p style="font-size:.88rem;color:var(--text-lt);">The penguin thanks you for getting in touch!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script src="js/contact.js"></script>
+</body>
+</html>

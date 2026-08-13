@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Endless Mode | There's Snow Place Like Home</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="theme-farm">
+<div id="nav-placeholder"></div>
+
+<div class="page-header" data-emoji="♾️">
+  <div class="container">
+    <div class="tag">No Finish Line</div>
+    <h1>Endless Mode</h1>
+    <p>Think you've mastered the three levels? See how long you can survive when there is no end in sight.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="endless-hero reveal">
+      <div class="snowflakes"></div>
+      <div style="position:relative;z-index:2;">
+        <div style="font-size:4rem;margin-bottom:16px;" class="bounce-anim">🐧♾️</div>
+        <h2>How Long Can You Last?</h2>
+        <p>Endless Mode removes the level structure. The penguin just keeps running — and the world keeps getting faster. Obstacles spawn continuously. The difficulty never stops increasing. Your score climbs every second you survive. The goal is simple: go as far as you can.</p>
+        <a href="game.html" class="btn btn-gold" style="margin-top:8px;">🎮 Play Now</a>
+      </div>
+    </div>
+
+    <!-- ENDLESS STATS -->
+    <div class="endless-stats reveal">
+      <div class="es-card">
+        <div class="es-icon">🏆</div>
+        <div class="es-val" id="highScore">—</div>
+        <div class="es-lbl">High Score</div>
+      </div>
+      <div class="es-card">
+        <div class="es-icon">⏱️</div>
+        <div class="es-val" id="longestRun">—</div>
+        <div class="es-lbl">Longest Run</div>
+      </div>
+      <div class="es-card">
+        <div class="es-icon">🧊</div>
+        <div class="es-val" id="mostCubes">—</div>
+        <div class="es-lbl">Most Ice Cubes</div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="two-col" style="margin-bottom:56px;">
+      <div class="reveal-left">
+        <div class="tag">How It Works</div>
+        <h2 class="section-title">The Rules of Endless</h2>
+        <p class="section-sub">No levels. No checkpoints. Just you, the penguin, and an ever-accelerating world.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;box-shadow:var(--shadow);">
+            <span style="font-size:1.4rem;flex-shrink:0;">🏃</span>
+            <div><strong style="color:var(--blue-dark);">Keep Running</strong><p style="font-size:.87rem;color:var(--text-lt);margin-top:4px;">The penguin never stops. Obstacles keep coming from all three environments mixed together.</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;box-shadow:var(--shadow);">
+            <span style="font-size:1.4rem;flex-shrink:0;">📈</span>
+            <div><strong style="color:var(--blue-dark);">Speed Increases</strong><p style="font-size:.87rem;color:var(--text-lt);margin-top:4px;">Every 30 seconds the game gets faster. What starts easy quickly becomes frantic.</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;box-shadow:var(--shadow);">
+            <span style="font-size:1.4rem;flex-shrink:0;">🧊</span>
+            <div><strong style="color:var(--blue-dark);">Collect Ice Cubes</strong><p style="font-size:.87rem;color:var(--text-lt);margin-top:4px;">Ice cubes keep spawning throughout. Every one you grab adds to your score.</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;box-shadow:var(--shadow);">
+            <span style="font-size:1.4rem;flex-shrink:0;">❤️</span>
+            <div><strong style="color:var(--blue-dark);">Limited Health</strong><p style="font-size:.87rem;color:var(--text-lt);margin-top:4px;">You start with the same health as normal mode. Hits hurt — and there's no finish line to reach.</p></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;box-shadow:var(--shadow);">
+            <span style="font-size:1.4rem;flex-shrink:0;">🏆</span>
+            <div><strong style="color:var(--blue-dark);">Submit Your Score</strong><p style="font-size:.87rem;color:var(--text-lt);margin-top:4px;">When your run ends, submit your name and score to the leaderboard below.</p></div>
+          </div>
+        </div>
+      </div>
+      <!-- SUBMIT SCORE FORM -->
+      <div class="reveal-right">
+        <div class="lb-submit-form">
+          <h3>🏆 Submit Your Score</h3>
+          <div id="lbMsg" class="form-msg"></div>
+          <div class="contact-form">
+            <div class="form-group">
+              <label for="lbName">Your Name</label>
+              <input type="text" id="lbName" placeholder="Enter your name" maxlength="50"/>
+            </div>
+            <div class="form-group">
+              <label for="lbScore">Score</label>
+              <input type="number" id="lbScore" placeholder="Your final score" min="0"/>
+            </div>
+            <div class="form-group">
+              <label for="lbCubes">Ice Cubes Collected</label>
+              <input type="number" id="lbCubes" placeholder="Ice cubes collected" min="0"/>
+            </div>
+            <div class="form-group">
+              <label for="lbTime">Survival Time (seconds)</label>
+              <input type="number" id="lbTime" placeholder="How many seconds you survived" min="0"/>
+            </div>
+            <button class="btn btn-primary" onclick="submitScore()">🏆 Submit Score</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="reveal">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+        <div>
+          <div class="tag">Top Players</div>
+          <h2 class="section-title" style="margin-bottom:0;">Leaderboard</h2>
+        </div>
+        <button class="btn btn-outline" style="color:var(--blue);border-color:var(--blue);" onclick="loadLeaderboard()">🔄 Refresh</button>
+      </div>
+      <div id="lbLoading" style="text-align:center;padding:30px;color:var(--text-lt);">Loading leaderboard...</div>
+      <div id="lbTableWrap" style="display:none;">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+              <th>Ice Cubes 🧊</th>
+              <th>Survival Time ⏱️</th>
+            </tr>
+          </thead>
+          <tbody id="lbBody"></tbody>
+        </table>
+        <p id="lbEmpty" style="text-align:center;padding:30px;color:var(--text-lt);display:none;">No scores yet — be the first to submit!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script src="js/leaderboard.js"></script>
+</body>
+</html>

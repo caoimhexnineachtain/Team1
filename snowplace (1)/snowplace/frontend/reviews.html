@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Reviews | There's Snow Place Like Home</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="theme-farm">
+<div id="nav-placeholder"></div>
+
+<div class="page-header" data-emoji="⭐">
+  <div class="container">
+    <div class="tag">Player Reviews</div>
+    <h1>Reviews</h1>
+    <p>Played the game? Let us know what you think! Leave a star rating and share your experience.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <!-- SUBMIT FORM -->
+      <div class="reveal-left">
+        <div class="review-form-wrap">
+          <div class="tag">Leave a Review</div>
+          <h2 style="font-size:1.4rem;font-weight:800;color:var(--blue-dark);margin-bottom:20px;">Share Your Experience</h2>
+          <div id="reviewMsg" class="form-msg"></div>
+          <div class="contact-form">
+            <div class="form-group">
+              <label>Your Rating</label>
+              <div class="star-input" id="starInput">
+                <span data-val="1">★</span>
+                <span data-val="2">★</span>
+                <span data-val="3">★</span>
+                <span data-val="4">★</span>
+                <span data-val="5">★</span>
+              </div>
+              <input type="hidden" id="ratingVal" value="0"/>
+              <p id="starErr" style="color:#c62828;font-size:.8rem;display:none;">Please select a rating.</p>
+            </div>
+            <div class="form-group">
+              <label for="rName">Your Name</label>
+              <input type="text" id="rName" placeholder="Enter your name" maxlength="60"/>
+            </div>
+            <div class="form-group">
+              <label for="rReview">Your Review</label>
+              <textarea id="rReview" placeholder="Tell us what you thought of the game..." maxlength="1000"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="rLevel">Favourite Level (optional)</label>
+              <select id="rLevel">
+                <option value="">— Select a level —</option>
+                <option value="Level 1 – Desert">Level 1 – Desert</option>
+                <option value="Level 2 – Jungle">Level 2 – Jungle</option>
+                <option value="Level 3 – Wild West">Level 3 – Wild West</option>
+                <option value="Endless Mode">Endless Mode</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="submitReview()">⭐ Submit Review</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVG RATING + INFO -->
+      <div class="reveal-right">
+        <div class="avg-rating" id="avgBox">
+          <div style="font-size:2.5rem;margin-bottom:8px;">🐧</div>
+          <div class="ar-num" id="avgNum">—</div>
+          <div class="ar-stars" id="avgStars">☆☆☆☆☆</div>
+          <div class="ar-sub" id="avgSub">No reviews yet — be the first!</div>
+        </div>
+        <div style="background:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);">
+          <h3 style="font-size:1rem;font-weight:800;color:var(--blue-dark);margin-bottom:12px;">Why Leave a Review?</h3>
+          <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;margin-bottom:12px;">Your feedback helps the development team understand what worked, what didn't and how to make the game even better.</p>
+          <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;">Whether you loved it, found it challenging or have suggestions — every review is appreciated!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS LIST -->
+    <div style="margin-top:48px;" class="reveal">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+        <h2 style="font-size:1.5rem;font-weight:800;color:var(--blue-dark);">Player Reviews</h2>
+        <button class="btn btn-outline" style="color:var(--blue);border-color:var(--blue);" onclick="loadReviews()">🔄 Refresh</button>
+      </div>
+      <div id="reviewsLoading" style="text-align:center;padding:40px;color:var(--text-lt);">Loading reviews...</div>
+      <div class="reviews-list" id="reviewsList" style="display:none;"></div>
+      <p id="reviewsEmpty" style="text-align:center;padding:40px;color:var(--text-lt);display:none;">No reviews yet. Be the first to share your experience!</p>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script src="js/reviews.js"></script>
+</body>
+</html>

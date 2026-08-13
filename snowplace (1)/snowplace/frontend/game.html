@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Our Game | There's Snow Place Like Home</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="theme-desert">
+<div id="nav-placeholder"></div>
+
+<div class="page-header" data-emoji="🎮">
+  <div class="container">
+    <div class="tag">The Game</div>
+    <h1>Our Game</h1>
+    <p>Everything you need to know about There's Snow Place Like Home — the story, the gameplay and the world.</p>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal-left">
+        <div class="tag">The Story</div>
+        <h2 class="section-title">A Penguin's Journey Home</h2>
+        <p class="section-sub">Deep in the Arctic, a penguin lived a peaceful life — until a mischievous cowboy decided to take him far, far away from home.</p>
+        <p style="color:var(--text-lt);line-height:1.8;margin-bottom:20px;">Now our penguin must travel through three treacherous environments — a scorching desert, a dense jungle and a wild west farm — to find his way back. Along the way he must dodge obstacles, collect precious ice cubes and stay one step ahead of the cowboy who is hot on his trail.</p>
+        <p style="color:var(--text-lt);line-height:1.8;">Every step brings him closer to the Arctic. Every obstacle tries to stop him. Can you get him home?</p>
+        <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="levels.html" class="btn btn-primary">🌍 View Levels</a>
+          <a href="how-to-play.html" class="btn btn-gold">📖 How to Play</a>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div style="background:linear-gradient(135deg,#1a5276,#2980b9,#74c0e8);border-radius:var(--radius-lg);padding:40px;text-align:center;color:#fff;position:relative;overflow:hidden;">
+          <div style="position:absolute;right:-10px;bottom:-10px;font-size:120px;opacity:.1;">🎮</div>
+          <div style="font-size:5rem;margin-bottom:16px;" class="bounce-anim">🐧</div>
+          <h3 style="color:var(--gold);font-weight:900;margin-bottom:8px;">There's Snow Place Like Home</h3>
+          <p style="opacity:.85;font-size:.9rem;line-height:1.7;margin-bottom:20px;">A 2D endless-runner adventure game built in Python using Pygame.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.85rem;">
+            <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:10px;"><strong style="color:var(--gold);display:block;">Genre</strong>Endless Runner</div>
+            <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:10px;"><strong style="color:var(--gold);display:block;">Engine</strong>Python / Pygame</div>
+            <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:10px;"><strong style="color:var(--gold);display:block;">Levels</strong>3 + Endless</div>
+            <div style="background:rgba(255,255,255,.1);border-radius:10px;padding:10px;"><strong style="color:var(--gold);display:block;">Players</strong>1 Player</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMEPLAY LOOP -->
+<section class="section section-alt">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;" class="reveal">
+      <div class="tag">Gameplay</div>
+      <h2 class="section-title">The Gameplay Loop</h2>
+      <p class="section-sub" style="margin:0 auto;">Simple controls. Increasing challenge. One goal — get home.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;" class="reveal">
+      <div style="background:#fff;border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--blue);">
+        <div style="font-size:2.2rem;margin-bottom:10px;">🏃</div><h3 style="font-size:.95rem;font-weight:800;color:var(--blue-dark);margin-bottom:6px;">RUN</h3>
+        <p style="font-size:.82rem;color:var(--text-lt);">The penguin keeps moving. Keep up!</p>
+      </div>
+      <div style="background:#fff;border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--desert);">
+        <div style="font-size:2.2rem;margin-bottom:10px;">⬆️</div><h3 style="font-size:.95rem;font-weight:800;color:var(--blue-dark);margin-bottom:6px;">JUMP</h3>
+        <p style="font-size:.82rem;color:var(--text-lt);">Leap over obstacles in your path.</p>
+      </div>
+      <div style="background:#fff;border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--cowboy);">
+        <div style="font-size:2.2rem;margin-bottom:10px;">🚫</div><h3 style="font-size:.95rem;font-weight:800;color:var(--blue-dark);margin-bottom:6px;">AVOID</h3>
+        <p style="font-size:.82rem;color:var(--text-lt);">Hitting obstacles drains your health.</p>
+      </div>
+      <div style="background:#fff;border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--ice-mid);">
+        <div style="font-size:2.2rem;margin-bottom:10px;">🧊</div><h3 style="font-size:.95rem;font-weight:800;color:var(--blue-dark);margin-bottom:6px;">COLLECT</h3>
+        <p style="font-size:.82rem;color:var(--text-lt);">Ice cubes increase your score.</p>
+      </div>
+      <div style="background:#fff;border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--jungle);">
+        <div style="font-size:2.2rem;margin-bottom:10px;">💪</div><h3 style="font-size:.95rem;font-weight:800;color:var(--blue-dark);margin-bottom:6px;">SURVIVE</h3>
+        <p style="font-size:.82rem;color:var(--text-lt);">Stay alive long enough to reach the end.</p>
+      </div>
+      <div style="background:#fff;border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--gold);">
+        <div style="font-size:2.2rem;margin-bottom:10px;">🏔️</div><h3 style="font-size:.95rem;font-weight:800;color:var(--blue-dark);margin-bottom:6px;">GET HOME</h3>
+        <p style="font-size:.82rem;color:var(--text-lt);">Reach the Arctic. You made it!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal-left">
+        <div class="tag">Game Features</div>
+        <h2 class="section-title">What's in the Game</h2>
+        <p class="section-sub">Every detail designed to make the journey feel real — and fun.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">🌍</span><span style="font-size:.9rem;color:var(--text);">3 unique environments — Desert, Jungle, Wild West Farm</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">🧊</span><span style="font-size:.9rem;color:var(--text);">Collectable ice cubes that boost your score</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">🚧</span><span style="font-size:.9rem;color:var(--text);">Varied obstacles across each environment</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">⬆️</span><span style="font-size:.9rem;color:var(--text);">Jump mechanic to dodge hazards</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">❤️</span><span style="font-size:.9rem;color:var(--text);">Health system — take too many hits and it's game over</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">🏆</span><span style="font-size:.9rem;color:var(--text);">Score system tracking your performance</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">♾️</span><span style="font-size:.9rem;color:var(--text);">Endless Mode — survive as long as possible</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">📈</span><span style="font-size:.9rem;color:var(--text);">Increasing difficulty as you progress</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--arctic);border-radius:10px;"><span style="font-size:1.4rem;">💀</span><span style="font-size:.9rem;color:var(--text);">Game Over screen with option to retry</span></div>
+        </div>
+      </div>
+      <!-- VILLAIN -->
+      <div class="reveal-right">
+        <div class="villain-card">
+          <div class="villain-emoji float">🤠</div>
+          <div>
+            <h2>Meet The Cowboy</h2>
+            <p>The villain of our story. He snatched the penguin from his icy Arctic home and dragged him across three hostile environments. He's not giving up easily — and he's right behind you.</p>
+            <div class="villain-stats">
+              <div class="vs-item"><strong>Role</strong>Villain</div>
+              <div class="vs-item"><strong>Mission</strong>Keep penguin away from home</div>
+              <div class="vs-item"><strong>Your Mission</strong>ESCAPE! Get home!</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:24px;background:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);">
+          <h3 style="font-size:1rem;font-weight:800;color:var(--blue-dark);margin-bottom:14px;">🧊 Ice Cubes — Why They Matter</h3>
+          <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;margin-bottom:12px;">Ice cubes are scattered throughout each level. To a penguin who misses the Arctic, they're a reminder of home — and they're valuable. Collect as many as you can to boost your score and prove you're worthy of the Arctic.</p>
+          <div style="text-align:center;font-size:3rem;" class="ice-spin">🧊</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
