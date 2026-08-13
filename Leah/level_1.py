@@ -19,15 +19,13 @@ class Cactus(pygame.sprite.Sprite):
          self.image = surf
          self.rect = self.image.get_rect(midbottom=pos)
          self.pos = pygame.math.Vector2(self.rect.topleft)
-         self.start_time = pygame.time.get_ticks()
-         self.lifetime = 4000
          self.speed = 600  
 
         # Adjust to match the game's scrolling speed
         def update(self, dt):
             self.pos.x -= self.speed * dt
             self.rect.x = round(self.pos.x)
-            if self.rect.right < -250:
+            if self.rect.right < -0:
                 self.kill()
 
 class IceCube(pygame.sprite.Sprite):
@@ -68,12 +66,14 @@ class Player(pygame.sprite.Sprite):
         
         
         # Same positioning method as the cactus
-        # self.rect = self.image.get_rect(midbottom=(self.start_x, self.ground_y))
         self.direction = pygame.Vector2()
         self.speed = 300
 
         self.hit_surf = pygame.image.load(join('caoimhe', 'images', 'dizzyplayer.png')).convert_alpha()
         self.hit_surf = pygame.transform.scale(self.hit_surf, (250, 250)) 
+
+        self.dead_surf = pygame.image.load(join('caoimhe', 'Images', 'deadplayer.png'))
+        self.dead_surf = pygame.transform.scale(self.dead_surf, (250, 250)) 
 
         self.image = self.normal_surf
 
@@ -88,17 +88,27 @@ class Player(pygame.sprite.Sprite):
         self.is_flashing = False
         self.flash_time = 0
         self.flash_duration = 450
+
         self.health = 3
         self.damage_cooldown = 500
+        self.is_dead = False
+        self.death_time = 0
+        self.death_duration = 1000  # 1 second
+
         self.last_hit_time = 0
+
         self.gravity = 1200
         self.jump_speed = -600
         self.velocity_y = 0
+
         self.on_ground = True
         self.start_x = WINDOW_WIDTH // 2
         
         
     def update(self, dt):
+        if self.is_dead:
+            self.image = self.dead_surf
+            return
         keys = pygame.key.get_pressed()
 
         # Jump
@@ -122,16 +132,12 @@ class Player(pygame.sprite.Sprite):
 
          # Only animate when on the ground
         if self.on_ground:
-        
                     self.animation_time += dt
-        
                     # Small up/down movement
                     bob = (
                         pygame.math.Vector2(0, pygame.math.Vector2(0, self.bob_amount).y))
-        
                     # Use sine wave for smooth bobbing
                     import math
-        
                     bob_offset = (math.sin(self.animation_time * self.bob_speed) * self.bob_amount)
                     # Keep the bottom of the penguin
                     # on the ground while bobbing
@@ -142,10 +148,32 @@ class Player(pygame.sprite.Sprite):
             self.animation_time = 0 
 
     def flash(self):
-        self.health -= 1
+     self.health -= 1
+
+     if self.health <= 0:
+        # Player has died
+        self.is_dead = True
+        self.is_flashing = False
+        self.death_time = pygame.time.get_ticks()
+        
+        # Remember exactly where the player died
+        death_position = self.rect.midbottom
+
+        # Change to dead image
+        self.image = self.dead_surf
+        # Put dead image in exactly the same place
+        self.rect = self.image.get_rect(midbottom=death_position)
+
+        # Keep the player in the same position
+        bottom_position = self.rect.midbottom
+        self.rect = self.image.get_rect(midbottom=bottom_position)
+
+     else:
+        # Player has been hit but still has lives
         self.is_flashing = True
         self.flash_time = pygame.time.get_ticks()
         self.image = self.hit_surf
+   
  
     def flash_timer(self):
         if self.is_flashing:
@@ -155,6 +183,8 @@ class Player(pygame.sprite.Sprite):
 
 def collisions():
     global game_over
+    if player.is_dead:
+        return
 
     collision_sprites = pygame.sprite.spritecollide(player, cactus_sprites, False, pygame.sprite.collide_mask)
     if collision_sprites:
@@ -173,7 +203,10 @@ def collisions():
 
             elif player.health <= 0:
                 heart1.kill()
-                game_over = True
+                # player.image = player.dead_surf
+                # # pygame.display.flip()
+                # # pygame.time.delay(1000)
+                # game_over = True
 
 def collect_ice_cubes():
  
@@ -181,7 +214,7 @@ def collect_ice_cubes():
  
         collected = pygame.sprite.spritecollide(player, ice_cube_sprites, True, pygame.sprite.collide_mask)
         if collected: collectable_score += len(collected)
-        print("Ice cubes:", collectable_score)
+        
 
 def display_score():
     current_time = pygame.time.get_ticks() // 100
@@ -210,6 +243,9 @@ def reset_game():
     global heart1, heart2, heart3
     # Reset health
     player.health = 3
+    player.is_dead = False
+    player.death_time = 0
+    player.image = player.normal_surf
 
     heart_sprites.empty()
     
@@ -230,9 +266,12 @@ def reset_game():
     # Reset score
     collectable_score = 0
  
-    # Remove all obsectals
-    cactus_sprites.empty()
-    ice_cube_sprites.empty()
+    # Remove all obstacles completely
+    for sprite in list(cactus_sprites):
+     sprite.kill()
+ 
+    for sprite in list(ice_cube_sprites):
+     sprite.kill()
     
     # Reset background
     bg_x = 0
@@ -333,7 +372,7 @@ pygame.display.set_caption("Snow Place like Home")
 background = pygame.image.load(join("caoimhe", "Images", "desert_background.png.png")).convert()
 background = pygame.transform.scale(background, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
-transition1 = pygame.image.load(join('caoimhe', 'images', 'boat-1.png'))
+transition1 = pygame.image.load(join('caoimhe', 'Images', 'boat-1.png'))
 transition1 = pygame.transform.scale(transition1, (WINDOW_WIDTH, WINDOW_HEIGHT))
 transition2 = pygame.image.load(join('caoimhe', 'images', 'boat-2.png'))
 transition2 = pygame.transform.scale(transition2, (WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -360,6 +399,7 @@ game_over_image = pygame.transform.scale(game_over_image,(WINDOW_WIDTH, WINDOW_H
 ice_cube_surf = pygame.image.load(join('Leah','ice.cube.png')).convert_alpha()
 ice_cube_surf = pygame.transform.scale(ice_cube_surf,(80, 80))
 
+
 #sprites
 all_sprites = pygame.sprite.Group()
 cactus_sprites = pygame.sprite.Group()
@@ -374,10 +414,10 @@ ice_cube_sprites = pygame.sprite.Group()
 collectable_score = 0
 
 cactus_event = pygame.event.custom_type()
-pygame.time.set_timer(cactus_event, 900)
+pygame.time.set_timer(cactus_event, 1400)
 
 ice_cube_event = pygame.event.custom_type()
-pygame.time.set_timer(ice_cube_event, 1500)
+pygame.time.set_timer(ice_cube_event, 2200)
 
 game_over = False
 game_start = True
@@ -385,57 +425,87 @@ running = True
 
 
 while running:
+
+    # ---------------- START SCREEN ----------------
     if game_start:
         start_screen()
-        clock.tick(60) 
+        clock.tick(60)
         continue
+
+    # ---------------- GAME OVER ----------------
+    if game_over:
+        game_over_screen()
+        continue
+
+    # ---------------- DELTA TIME ----------------
     dt = clock.tick(60) / 1000
+
+    # ---------------- EVENTS ----------------
     for event in pygame.event.get():
+
         if event.type == pygame.QUIT:
             running = False
-        if event.type == cactus_event:
-         x = WINDOW_WIDTH + randint(200, 1000)
-         y = 500
-         Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
-        if event.type == ice_cube_event:
-            x = WINDOW_WIDTH + randint(200, 1000)
-            # Random height
-            y = randint(180, 350)
-            IceCube(ice_cube_surf,(x, y), (all_sprites, ice_cube_sprites))
 
-        if game_over:
-                game_over_screen()
-                continue
-        
-     # Move background
+        elif event.type == cactus_event:
+            x = WINDOW_WIDTH + randint(200, 1000)
+            y = 500
+
+            Cactus(cactus_surf, (x, y), (all_sprites, cactus_sprites))
+
+        elif event.type == ice_cube_event:
+            x = WINDOW_WIDTH + randint(200, 1000)
+            y = randint(180, 350)
+
+            IceCube(ice_cube_surf, (x, y), (all_sprites, ice_cube_sprites))
+
+    # ---------------- UPDATE GAME ----------------
+
+    # Only move the game while the player is alive
+    if not player.is_dead:
+
+        # Move background
         bg_x -= scroll_speed
 
-        # Reset position
         if bg_x <= -WINDOW_WIDTH:
             bg_x = 0
 
-        # Draw two backgrounds
-        screen.blit(background, (bg_x, 0))
-        screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
-
-
-
-     #sprites
+        # Update player, cacti and ice cubes
         all_sprites.update(dt)
+
+        # Check collisions
         collisions()
         collect_ice_cubes()
+
+
+    # ---------------- DRAW ----------------
+
+    screen.blit(background, (bg_x, 0))
+    screen.blit(background, (bg_x + WINDOW_WIDTH, 0))
+
+    all_sprites.draw(screen)
+    heart_sprites.draw(screen)
+
+    display_score()
+
+        # ---------------- DEATH ----------------
+
+    if player.is_dead:
+        if pygame.time.get_ticks() - player.death_time >= player.death_duration:
+            game_over = True
+
+        # ---------------- LEVEL CUTSCENE ----------------
+
         if collectable_score >= 10:
             level_cutscene()
+
+        # ---------------- DRAW ----------------
+
         all_sprites.draw(screen)
         heart_sprites.draw(screen)
 
-
-
         display_score()
-    
-        
+
         pygame.display.flip()
-   
 
 pygame.quit()
 sys.exit()
