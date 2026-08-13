@@ -20,7 +20,7 @@ class Alien(pygame.sprite.Sprite):
             self.pos.x -= self.speed * dt
             self.rect.x = round(self.pos.x)
             if self.rect.right < -250:
-                self.kill()
+                self.kill() 
 
 
 class Player(pygame.sprite.Sprite):
