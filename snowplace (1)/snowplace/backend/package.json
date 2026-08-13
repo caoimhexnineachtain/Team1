@@ -1,7 +1,7 @@
 {
   "name": "snowplace-backend",
   "version": "1.0.0",
-  "description": "Backend for There's Snow Place Like Home website",
+  "description": "Backend for Snow Place Like Home website",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

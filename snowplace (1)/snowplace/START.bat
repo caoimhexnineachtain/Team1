@@ -1,6 +1,6 @@
 @echo off
 echo ============================================
-echo  THERE'S SNOW PLACE LIKE HOME - Website
+echo  SNOW PLACE LIKE HOME - Website
 echo ============================================
 echo.
 echo Starting server...
