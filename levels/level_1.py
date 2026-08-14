@@ -1171,7 +1171,7 @@ while running:
     # ---------------- LEVEL COMPLETE ----------------
 
     if (
-        collectable_score >= 5
+        collectable_score >= 1
         and not player.is_dead
     ):
 
