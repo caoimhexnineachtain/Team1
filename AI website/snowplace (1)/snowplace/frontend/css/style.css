@@ -205,30 +205,6 @@ button { cursor:pointer; font-family:inherit; }
 .tl-spacer { flex:1; }
 @media(max-width:620px){ .timeline::before{left:20px;} .tl-row,.tl-row:nth-child(even){flex-direction:column;padding-left:50px;position:relative;} .tl-dot-wrap{position:absolute;left:6px;top:0;} .tl-spacer{display:none;} }
 
-/* ── Quiz ── */
-.quiz-wrap { background:linear-gradient(160deg,var(--blue-dark),var(--blue)); border-radius:var(--radius-lg); padding:40px; max-width:760px; margin:0 auto; }
-.quiz-prog-bar { height:6px; background:rgba(255,255,255,.15); border-radius:3px; margin-bottom:24px; overflow:hidden; }
-.quiz-prog-fill { height:100%; background:linear-gradient(90deg,var(--gold),#f39c12); border-radius:3px; transition:width .5s ease; }
-.quiz-meta { display:flex; justify-content:space-between; margin-bottom:18px; }
-.q-counter { font-size:.8rem; color:rgba(255,255,255,.55); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
-.q-score-display { font-size:.9rem; color:var(--gold); font-weight:800; }
-.q-text { font-size:1.1rem; font-weight:700; color:#fff; line-height:1.6; margin-bottom:24px; min-height:56px; }
-.q-opts { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
-@media(max-width:500px){ .q-opts{grid-template-columns:1fr;} }
-.q-opt { background:rgba(255,255,255,.1); border:2px solid rgba(255,255,255,.15); color:rgba(255,255,255,.9); border-radius:10px; padding:12px 16px; font-size:.9rem; font-weight:600; text-align:left; cursor:pointer; transition:var(--transition); line-height:1.4; }
-.q-opt:hover:not(:disabled) { background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.4); transform:translateX(3px); }
-.q-opt.correct { background:rgba(39,174,96,.35); border-color:#27ae60; color:#abebc6; }
-.q-opt.wrong   { background:rgba(192,57,43,.3); border-color:#c0392b; color:#f1948a; }
-.q-exp { background:rgba(241,196,15,.12); border:1px solid rgba(241,196,15,.3); border-radius:10px; padding:14px 16px; color:rgba(255,255,255,.85); font-size:.88rem; line-height:1.65; margin-bottom:18px; display:none; }
-.q-exp.show { display:block; }
-.q-exp strong { color:var(--gold); }
-.btn-q-next { background:var(--gold); color:var(--blue-dark); border:none; padding:10px 28px; border-radius:30px; font-size:.9rem; font-weight:800; cursor:pointer; transition:var(--transition); display:none; }
-.btn-q-next:hover { background:#f39c12; transform:translateY(-2px); }
-.quiz-result { text-align:center; display:none; }
-.quiz-result .res-score { font-size:4rem; font-weight:900; color:var(--gold); margin:12px 0; }
-.quiz-result .res-badge { display:inline-block; background:rgba(241,196,15,.15); border:2px solid var(--gold); color:var(--gold); font-size:1.2rem; font-weight:800; padding:10px 26px; border-radius:50px; margin-bottom:20px; }
-.quiz-result .res-title { font-size:1.5rem; font-weight:800; color:#fff; margin-bottom:8px; }
-.quiz-result .res-sub { font-size:.95rem; color:rgba(255,255,255,.7); margin-bottom:24px; }
 
 /* ── Reviews ── */
 .review-form-wrap { background:#fff; border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-lg); max-width:600px; }
@@ -502,7 +478,7 @@ body.theme-desert::after {
 
 
 /* ══════════════════════════════════════
-   JUNGLE THEME  (how-to-play.html, quiz.html, gallery.html)
+   JUNGLE THEME  (how-to-play.html, gallery.html)
 ══════════════════════════════════════ */
 body.theme-jungle {
   background: linear-gradient(180deg,
