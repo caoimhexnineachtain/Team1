@@ -828,8 +828,8 @@ while running:
             )
 
 
-            # Ground level
-            y = WINDOW_HEIGHT
+            # Ground level - match player's ground_y
+            y = 550
 
 
             HayBail(
