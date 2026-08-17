@@ -11,7 +11,7 @@ class Hearticon(pygame.sprite.Sprite):
         super().__init__()
 
         self.image = pygame.image.load(
-            join("caoimhe", "Images", "hearticon1.png")
+            join("assets", "Images", "hearticon1.png")
         ).convert_alpha()
 
         # Make the hearts a suitable size
@@ -105,7 +105,7 @@ class Player(pygame.sprite.Sprite):
 
         self.normal_surf = pygame.image.load(
             join(
-                "caoimhe",
+                "assets",
                 "images",
                 "Player.png"
             )
@@ -131,7 +131,7 @@ class Player(pygame.sprite.Sprite):
 
         self.hit_surf = pygame.image.load(
             join(
-                "caoimhe",
+                "assets",
                 "images",
                 "dizzyplayer.png"
             )
@@ -144,7 +144,7 @@ class Player(pygame.sprite.Sprite):
 
         self.dead_surf = pygame.image.load(
             join(
-                "caoimhe",
+                "assets",
                 "Images",
                 "deadplayer.png"
             )
@@ -766,7 +766,7 @@ pygame.display.set_caption(
 
 background = pygame.image.load(
     join(
-        "caoimhe",
+        "assets",
         "Images",
         "desert_background.png.png"
     )
@@ -784,7 +784,7 @@ background = pygame.transform.scale(
 
 transition1 = pygame.image.load(
     join(
-        "caoimhe",
+        "assets",
         "Images",
         "boat-1.png"
     )
@@ -798,7 +798,7 @@ transition1 = pygame.transform.scale(
 
 transition2 = pygame.image.load(
     join(
-        "caoimhe",
+        "assets",
         "Images",
         "boat-2.png"
     )
@@ -812,7 +812,7 @@ transition2 = pygame.transform.scale(
 
 transition3 = pygame.image.load(
     join(
-        "caoimhe",
+        "assets",
         "Images",
         "boat-3.png"
     )
@@ -830,7 +830,7 @@ transition3 = pygame.transform.scale(
 
 start_screen_image = pygame.image.load(
     join(
-        "caoimhe",
+        "assets",
         "images",
         "startscreen.png"
     )
@@ -861,7 +861,7 @@ clock = pygame.time.Clock()
 
 cactus_surf = pygame.image.load(
     join(
-        "caoimhe",
+        "assets",
         "Images",
         "Cactus.png"
     )
@@ -877,13 +877,7 @@ cactus_surf = pygame.transform.scale(
 # FONT
 # ============================================================
 
-font = pygame.font.Font(
-    join(
-        "Leah",
-        "Oxanium-Bold.ttf"
-    ),
-    20
-)
+font = pygame.font.Font(join("assets", "fonts", "Oxanium-Bold.ttf"), 20)
 
 text_surf = font.render(
     "text",
@@ -898,7 +892,7 @@ text_surf = font.render(
 
 game_over_image = pygame.image.load(
     join(
-        "Leah",
+        "assets", 'images',
         "game.over.jpg"
     )
 ).convert_alpha()
@@ -915,7 +909,7 @@ game_over_image = pygame.transform.scale(
 
 ice_cube_surf = pygame.image.load(
     join(
-        "Leah",
+        "assets", 'images',
         "ice.cube.png"
     )
 ).convert_alpha()
@@ -932,7 +926,7 @@ ice_cube_surf = pygame.transform.scale(
 
 cowboy_surf = pygame.image.load(
     join(
-        "caoimhe",
+        "assets",
         "Images",
         "cowboy.png"
     )

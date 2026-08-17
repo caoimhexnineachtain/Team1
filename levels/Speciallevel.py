@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__(groups)
         self.start_x = WINDOW_WIDTH // 2
         self.ground_y = 540
-        self.normal_surf = pygame.image.load(join('caoimhe', 'images', 'Player.png')).convert_alpha()
+        self.normal_surf = pygame.image.load(join('assets', 'images', 'Player.png')).convert_alpha()
         self.image = self.normal_surf
         self.normal_surf = pygame.transform.scale(self.image, (250, 250))
         self.rect = self.image.get_rect(midtop=(self.start_x, self.ground_y))
@@ -39,7 +39,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.Vector2()
         self.speed = 300
 
-        self.hit_surf = pygame.image.load(join('caoimhe', 'images', 'dizzyplayer.png')).convert_alpha()
+        self.hit_surf = pygame.image.load(join('assets', 'images', 'dizzyplayer.png')).convert_alpha()
         self.hit_surf = pygame.transform.scale(self.hit_surf, (250, 250))
 
         self.image = self.normal_surf
@@ -238,7 +238,7 @@ def game_over_screen():
 class Hearticon(pygame.sprite.Sprite): 
     def __init__(self, position): 
         super().__init__() 
-        self.image = pygame.image.load(join("caoimhe", "Images", 'hearticon1.png')).convert_alpha() 
+        self.image = pygame.image.load(join("assets", "Images", 'hearticon1.png')).convert_alpha() 
         # Make the hearts a suitable size 
         self.image = pygame.transform.scale(self.image, (50, 50) ) 
         # Position 
@@ -257,7 +257,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Desert Runner")
 
 # # Load background
-background = pygame.image.load(join("caoimhe", "Images", "spacelevel.png")).convert()
+background = pygame.image.load(join("assets", "Images", "spacelevel.png")).convert()
 background = pygame.transform.scale(background, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # # Background scrolling
@@ -267,13 +267,13 @@ scroll_speed = 10 # Increase for faster scrolling
 clock = pygame.time.Clock()
 
 # #import
-alien_surf = pygame.image.load(join("caoimhe", "Images", 'alien.png')).convert_alpha()
+alien_surf = pygame.image.load(join("assets", "Images", 'alien.png')).convert_alpha()
 alien_surf = pygame.transform.scale(alien_surf, (250, 250))
-font = pygame.font.Font(join('Leah', 'Oxanium-Bold.ttf'), 20)
+font = pygame.font.Font(join('assets', 'fonts', 'Oxanium-Bold.ttf'), 20)
 text_surf = font.render('text', True, (240,240,240))
-ice_cube_surf = pygame.image.load(join('Leah','ice.cube.png')).convert_alpha()
+ice_cube_surf = pygame.image.load(join('assets', 'images','ice.cube.png')).convert_alpha()
 ice_cube_surf = pygame.transform.scale(ice_cube_surf,(80, 80))
-game_over_image = pygame.image.load(join('Leah', 'game.over.jpg')).convert_alpha()
+game_over_image = pygame.image.load(join('assets', 'images', 'game.over.jpg')).convert_alpha()
 game_over_image = pygame.transform.scale(game_over_image,(WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # #sprites
