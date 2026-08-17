@@ -36,6 +36,7 @@ db.exec(`
     review TEXT NOT NULL,
     favourite_level TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+
   );
 
   CREATE TABLE IF NOT EXISTS leaderboard (
@@ -100,6 +101,7 @@ app.post('/api/reviews', (req, res) => {
   stmt.run(sanitize(name), r, sanitize(review), sanitize(favourite_level || ''));
   res.json({ success: true, message: 'Review submitted! Thank you.' });
 });
+
 
 // ── LEADERBOARD routes ─────────────────────────────────────────
 app.get('/api/leaderboard', (req, res) => {
