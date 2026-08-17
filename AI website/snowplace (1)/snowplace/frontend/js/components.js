@@ -38,7 +38,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <h3>🐧 There's <span>Snow Place</span> Like Home</h3>
+        <h3>🐧<span>Snow Place</span> Like Home</h3>
         <p>One penguin. Three worlds. One journey home. Can you make it back to the Arctic?</p>
       </div>
       <div class="footer-col">
