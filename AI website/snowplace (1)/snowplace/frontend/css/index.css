@@ -2,6 +2,23 @@
    SNOW PLACE LIKE HOME — Home Page (index.html)
    ===================================================== */
 
+/* ── Map background layering ──
+   Layer order (back → front):
+     1. #0d2e5c  — solid blue (fallback / base colour)
+     2. map.png  — the scrolling map image
+     3. page content (z-index handled per element)
+   background-attachment: scroll  → map moves with the page
+   background-size: 100% auto     → stretches to full width
+*/
+body.map-bg {
+  background-color: #0d2e5c;                /* layer 1 — blue base */
+  background-image: url("../images/map.png"); /* layer 2 — map on top of blue */
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
 /* ── Hero ── */
 /* =====================================================
    SNOW PLACE LIKE HOME — Homepage

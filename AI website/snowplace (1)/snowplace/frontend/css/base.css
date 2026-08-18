@@ -60,8 +60,8 @@ html {
   font-size: 16px;
 }
 
-body{
-font-family:
+body {
+  font-family:
     'Segoe UI',
     system-ui,
     Arial,
@@ -69,16 +69,8 @@ font-family:
 
   color: var(--text);
 
-  /* Step out of 'css', step out of 'frontend', then into 'assets/images/' */
-  background-image: url('map.png');
-
-  /* Positioning and scaling */
-  background-position: top center;
-  background-repeat: repeat-y;
-  background-size: 100% auto;
-
-  /* Ensures the background scrolls with the page content */
-  background-attachment: scroll;
+  /* Base background — pages can override this with their own background */
+  background-color: var(--ice-deep);
 
   overflow-x: hidden;
   position: relative;
