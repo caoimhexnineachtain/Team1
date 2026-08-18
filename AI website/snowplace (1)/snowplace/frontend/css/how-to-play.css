@@ -1,0 +1,25 @@
+/* =====================================================
+   SNOW PLACE LIKE HOME — How to Play Page (how-to-play.html)
+   ===================================================== */
+
+/* ── How to play grid ── */
+.htp-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+@media(max-width:760px){ .htp-grid{grid-template-columns:1fr;} }
+.htp-card { background:#fff; border-radius:var(--radius); padding:24px; box-shadow:var(--shadow); display:flex; gap:18px; align-items:flex-start; transition:var(--transition); }
+.htp-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+.htp-icon { font-size:2.2rem; flex-shrink:0; }
+.htp-card h3 { font-size:1rem; font-weight:800; color:var(--ice-dark); margin-bottom:6px; }
+.htp-card p  { font-size:.88rem; color:var(--text-lt); line-height:1.65; }
+
+/* ── Controls card ── */
+.controls-card { background:#1a5276; border-radius:var(--radius-lg); padding:32px; color:#fff; }
+.controls-card h3 { font-size:1.2rem; font-weight:800; color:var(--gold); margin-bottom:20px; }
+.ctrl-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.key { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); border-radius:8px; padding:6px 14px; font-weight:800; font-family:monospace; font-size:.9rem; color:#fff; display:inline-block; }
+.ctrl-row span { font-size:.9rem; color:rgba(255,255,255,.85); }
+
+/* ── Diagram ── */
+.diagram-wrap { background:#b8e0f7; border-radius:var(--radius-lg); padding:40px 24px; text-align:center; position:relative; overflow:hidden; min-height:200px; display:flex; align-items:flex-end; justify-content:space-around; }
+.diag-item { display:flex; flex-direction:column; align-items:center; gap:6px; }
+.diag-item .d-icon  { font-size:2.8rem; }
+.diag-item .d-label { font-size:.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; background:rgba(13,46,92,.45); color:#fff; padding:3px 10px; border-radius:20px; }
