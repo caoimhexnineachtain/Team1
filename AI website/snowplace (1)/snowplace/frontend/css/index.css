@@ -12,7 +12,7 @@
 */
 body.map-bg {
   background-color: #0d2e5c;                /* layer 1 — blue base */
-  background-image: url("../images/map.png"); /* layer 2 — map on top of blue */
+  background-image: url("assets/images/map.png"); /* layer 2 — map on top of blue */
   background-size: 100% auto;
   background-position: top center;
   background-repeat: no-repeat;
