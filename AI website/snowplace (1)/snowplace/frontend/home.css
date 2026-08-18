@@ -1,0 +1,317 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background: #07131c;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7%;
+    background: rgba(4, 15, 23, 0.85);
+    backdrop-filter: blur(8px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #9eeaff;
+}
+
+/* =========================
+   SCROLLING BACKGROUND
+========================= */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    background-image:
+        url("map.png");
+
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    background-position: 0 center;
+
+    animation: scrollMap 35s linear infinite;
+}
+
+@keyframes scrollMap {
+    from {
+        background-position: 0 center;
+    }
+
+    to {
+        background-position: -2000px center;
+    }
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero-content {
+    max-width: 800px;
+    text-align: center;
+    padding: 30px;
+    animation: fadeIn 1.5s ease;
+}
+
+.small-title {
+    font-size: 18px;
+    letter-spacing: 6px;
+    color: #bdefff;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: clamp(60px, 11vw, 140px);
+    line-height: 0.9;
+    letter-spacing: 5px;
+
+    text-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.8);
+}
+
+.hero-text {
+    max-width: 600px;
+    margin: 30px auto;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.button {
+    display: inline-block;
+    padding: 16px 32px;
+
+    color: #07131c;
+    background: white;
+
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+
+    transition: 0.3s;
+}
+
+.button:hover {
+    transform: translateY(-4px);
+    background: #bdefff;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+    min-height: 70vh;
+    padding: 120px 8%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            rgba(6, 23, 34, 0.96),
+            rgba(4, 15, 23, 0.98)
+        );
+}
+
+.card {
+    max-width: 850px;
+    text-align: center;
+}
+
+.section-label {
+    color: #8eddf5;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: clamp(40px, 6vw, 70px);
+    margin-bottom: 25px;
+}
+
+.card p:not(.section-label) {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #c9d8df;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   WHAT YOU'LL DO
+========================= */
+
+.things {
+    display: block;
+    text-align: center;
+}
+
+.activities {
+    max-width: 1100px;
+    margin: 50px auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.activity {
+    padding: 40px 25px;
+
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+}
+
+.activity:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.activity h3 {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.activity p {
+    color: #b9cbd3;
+    line-height: 1.6;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 50px 20px;
+    text-align: center;
+
+    background: #030b11;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #9eb0b8;
+}
+
+.copyright {
+    margin-top: 25px;
+    font-size: 13px;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+
+    .nav-links {
+        gap: 12px;
+        font-size: 13px;
+    }
+
+    .hero-text {
+        font-size: 16px;
+    }
+
+    .activities {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 100px 20px;
+    }
+}

@@ -1,103 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Snow Place Like Home</title>
-<link rel="stylesheet" href="css/base.css"/>
-<link rel="stylesheet" href="css/index.css"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Snow Place Like Home</title>
+
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/index.css"/>
 </head>
-<div id="nav-placeholder"></div>
-  <style>
-    body {
-      margin: 0;
-      background-image: url("map.png");
-      background-size: 100% auto;
-      background-position: top center;
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-    }
 
-    .content {
-      min-height: 2000px;
-      padding: 50px;
-    }
-  </style>
+<body>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-penguin"></div>
-  <div class="hero-ground"></div>
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge"> Arctic Adventure</div>
-      <h1 class="hero-title"><span class="accent">SNOW</span> PLACE<br>LIKE HOME</h1>
-      <p class="hero-sub">One penguin. Three worlds. One journey home.</p>
-      <p class="hero-sub2">Can you make it back to the Arctic?</p>
-      <div class="hero-btns">
-        <a href="game.html" class="btn btn-gold">Play The Game</a>
-        <a href="levels.html" class="btn btn-outline"> Explore The Game</a>
+  <!-- NAVBAR -->
+  <div id="nav-placeholder"></div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+
+
+    <!-- Decorative ground -->
+    <div class="hero-ground"></div>
+
+    <!-- Hero content -->
+    <div class="container">
+      <div class="hero-content">
+
+
+        <h1 class="hero-title">
+          <span class="accent">SNOW</span> PLACE<br>
+          LIKE HOME
+        </h1>
+
+        <p class="hero-sub">
+          One penguin. Three worlds. One journey home.
+        </p>
+
+        <p class="hero-sub2">
+          Can you make it back to the Arctic?
+        </p>
+
+        <div class="hero-btns">
+          <a href="game.html" class="btn btn-gold">
+             Play The Game
+          </a>
+
+          <a href="levels.html" class="btn btn-outline">
+             Explore The Game
+          </a>
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
 
-<!-- INTRO -->
-<section class="section">
-  <div class="container">
-    <div style="max-width:700px;margin:0 auto;text-align:center;margin-bottom:56px;" class="reveal">
-      <div class="tag">The Adventure Begins</div>
-      <h2 class="section-title" style="text-align:center;">A Penguin Far From Home</h2>
-      <p class="section-sub" style="max-width:620px;margin:0 auto 0;">Help our penguin make his way home to the Arctic. Travel through scorching deserts, dense jungles and dangerous farms while avoiding obstacles, collecting ice cubes and escaping the cowboy who stole his home.</p>
-    </div>
-
-    <!-- Journey bar -->
-    <div class="journey-bar reveal">
-      <div class="journey-step"><div class="js-icon">🐧</div><div class="js-label">Start</div></div>
-      <div class="journey-arrow">→</div>
-      <div class="journey-step"><div class="js-icon">🏜️</div><div class="js-label">Desert</div></div>
-      <div class="journey-arrow">→</div>
-      <div class="journey-step"><div class="js-icon">🌴</div><div class="js-label">Jungle</div></div>
-      <div class="journey-arrow">→</div>
-      <div class="journey-step"><div class="js-icon">🤠</div><div class="js-label">Wild West</div></div>
-      <div class="journey-arrow">→</div>
-      <div class="journey-step"><div class="js-icon">🏔️</div><div class="js-label">Arctic!</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURE CARDS -->
-<section class="section section-alt">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:40px;" class="reveal">
-      <div class="tag">Gameplay</div>
-      <h2 class="section-title">What You'll Do</h2>
-    </div>
-    <div class="feat-grid">
-      <div class="feat-card reveal"><div class="fi">🏃</div><h3>RUN</h3><p>Travel through three increasingly dangerous environments. The further you go, the harder it gets.</p></div>
-      <div class="feat-card reveal"><div class="fi">🧊</div><h3>COLLECT</h3><p>Gather ice cubes along the way. You need your house back — and they boost your score.</p></div>
-      <div class="feat-card reveal"><div class="fi">🏠</div><h3>RETURN HOME</h3><p>Navigate through desert, jungle and farm to reach the Arctic and finally get back home.</p></div>
-    </div>
-  </div>
-</section>
+  </section>
 
 
-<!-- CTA -->
-<section class="section section-alt">
-  <div class="container" style="text-align:center;">
-    <div class="reveal">
-      <div style="font-size:4rem;margin-bottom:16px;" class="float">🐧</div>
-      <h2 class="section-title">Ready to Begin the Journey?</h2>
-      <p class="section-sub" style="margin:0 auto 32px;">Three levels. Three worlds. Can you guide the penguin all the way back home?</p>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-        <a href="game.html" class="btn btn-primary">🎮 Our Game</a>
-        <a href="reviews.html" class="btn btn-outline" style="color:var(--blue-dark);border-color:var(--blue);">⭐ Leave a Review</a>
+  <!-- INTRO -->
+  <section class="section">
+
+    <div class="container">
+
+      <div class="intro reveal">
+
+        <div class="tag">
+          The Adventure Begins
+        </div>
+
+        <h2 class="section-title">
+          A Penguin Far From Home
+        </h2>
+
+        <p class="section-sub">
+          Help our penguin make his way home to the Arctic.
+          Travel through scorching deserts, dense jungles and
+          dangerous farms while avoiding obstacles, collecting
+          ice cubes and escaping the cowboy who stole his home.
+        </p>
+
       </div>
-    </div>
-  </div>
-</section>
 
-<div id="footer-placeholder"></div>
-<script src="js/components.js"></script>
-<script src="js/main.js"></script>
+
+      <!-- JOURNEY BAR -->
+      <div class="journey-bar reveal">
+
+        <div class="journey-step">
+          <div class="js-icon">🐧</div>
+          <div class="js-label">Start</div>
+        </div>
+
+        <div class="journey-arrow">→</div>
+
+        <div class="journey-step">
+          <div class="js-icon">🏜️</div>
+          <div class="js-label">Desert</div>
+        </div>
+
+        <div class="journey-arrow">→</div>
+
+        <div class="journey-step">
+          <div class="js-icon">🌴</div>
+          <div class="js-label">Jungle</div>
+        </div>
+
+        <div class="journey-arrow">→</div>
+
+        <div class="journey-step">
+          <div class="js-icon">🤠</div>
+          <div class="js-label">Wild West</div>
+        </div>
+
+        <div class="journey-arrow">→</div>
+
+        <div class="journey-step">
+          <div class="js-icon">🏔️</div>
+          <div class="js-label">Arctic!</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURE CARDS -->
+  <section class="section section-alt">
+
+    <div class="container">
+
+      <div class="section-heading reveal">
+
+        <div class="tag">
+          Gameplay
+        </div>
+
+        <h2 class="section-title">
+          What You'll Do
+        </h2>
+
+      </div>
+
+
+      <div class="feat-grid">
+
+        <div class="feat-card reveal">
+          <div class="fi">🏃</div>
+
+          <h3>RUN</h3>
+
+          <p>
+            Travel through three increasingly dangerous
+            environments. The further you go, the harder it gets.
+          </p>
+        </div>
+
+
+        <div class="feat-card reveal">
+          <div class="fi">🧊</div>
+
+          <h3>COLLECT</h3>
+
+          <p>
+            Gather ice cubes along the way. You need your house
+            back — and they boost your score.
+          </p>
+        </div>
+
+
+        <div class="feat-card reveal">
+          <div class="fi">🏠</div>
+
+          <h3>RETURN HOME</h3>
+
+          <p>
+            Navigate through desert, jungle and farm to reach
+            the Arctic and finally get back home.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="section section-alt">
+
+    <div class="container cta">
+
+      <div class="reveal">
+
+        <div class="cta-penguin float">
+          🐧
+        </div>
+
+        <h2 class="section-title">
+          Ready to Begin the Journey?
+        </h2>
+
+        <p class="section-sub">
+          Three levels. Three worlds. Can you guide the penguin
+          all the way back home?
+        </p>
+
+        <div class="cta-buttons">
+
+          <a href="game.html" class="btn btn-primary">
+            🎮 Our Game
+          </a>
+
+          <a
+            href="reviews.html"
+            class="btn btn-outline cta-outline"
+          >
+            ⭐ Leave a Review
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="js/components.js"></script>
+  <script src="js/main.js"></script>
+
 </body>
 </html>
