@@ -275,6 +275,17 @@ button { cursor:pointer; font-family:inherit; }
 .form-msg { padding:14px 18px; border-radius:10px; font-size:.9rem; font-weight:600; display:none; }
 .form-msg.success { background:#e3f2fd; color:#1a5276; border:1px solid #90caf9; display:block; }
 .form-msg.error   { background:#fce4ec; color:#c62828; border:1px solid #ef9a9a; display:block; }
+/* ── Center contact page ── */
+.two-col {
+  display: flex;
+  justify-content: center;
+}
+
+.reveal-left {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
 /* ── Leaderboard ── */
 .leaderboard-table { width:100%; border-collapse:collapse; background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
