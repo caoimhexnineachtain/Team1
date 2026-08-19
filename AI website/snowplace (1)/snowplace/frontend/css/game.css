@@ -2,6 +2,18 @@
    SNOW PLACE LIKE HOME — Game Page (game.html)
    ===================================================== */
 
+/* Colors used throughout game.html but missing from base.css —
+   without these, var() falls back to nothing and boxes render
+   with no background, leaving dark text unreadable on the page. */
+:root {
+  --blue: var(--ice-mid);
+  --blue-dark: var(--ice-dark);
+  --arctic: var(--ice-snow);
+  --desert: #d9a441;
+  --jungle: #2e8b57;
+  --cowboy: #a0522d;
+}
+
 /* ── Villain card ── */
 .villain-card { background:#1a5276; border-radius:var(--radius-lg); padding:40px; color:#fff; display:flex; gap:32px; align-items:center; flex-wrap:wrap; }
 .villain-emoji { font-size:6rem; flex-shrink:0; }

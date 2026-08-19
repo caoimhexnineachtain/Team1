@@ -75,7 +75,7 @@ body {
     overflow: hidden;
 
     background-image:
-        url("map.png");
+        url("../../../../assets/images/map.png");
 
     background-repeat: repeat-x;
     background-size: auto 100%;

@@ -5,18 +5,25 @@
 /* ── Map background layering ──
    Layer order (back → front):
      1. #0d2e5c  — solid blue (fallback / base colour)
-     2. map.png  — the scrolling map image
+     2. map.png  — full width, static (moves only when the page scrolls)
      3. page content (z-index handled per element)
-   background-attachment: scroll  → map moves with the page
-   background-size: 100% auto     → stretches to full width
+   Sections in base.css are kept transparent/translucent
+   so the map stays visible behind them.
 */
 body.map-bg {
-  background-color: #0d2e5c;                /* layer 1 — blue base */
-  background-image: url("assets/images/map.png"); /* layer 2 — map on top of blue */
-  background-size: 100% auto;
-  background-position: top center;
+  background-color: #0d2e5c;                                    /* layer 1 — blue base */
+  background-image: url("../../../../../assets/images/map.png"); /* layer 2 — full-width map */
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-size: cover;
+  background-position: top center;
+  background-attachment: fixed; /* keeps the map filling the whole screen as the page scrolls, instead of running out partway down */
+}
+
+@media (max-width: 900px) {
+  body.map-bg {
+    /* background-attachment:fixed is unreliable on mobile browsers — fall back to a scrolling cover background */
+    background-attachment: scroll;
+  }
 }
 
 /* ── Hero ── */
@@ -67,6 +74,21 @@ body.map-bg {
   z-index: 4;
 
   max-width: 680px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 30, 61, .68),
+      rgba(8, 30, 61, .42)
+    );
+
+  border: 1px solid rgba(255, 255, 255, .15);
+
+  border-radius: var(--radius-lg);
+
+  padding: 36px 40px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
 }
 
 
@@ -234,6 +256,22 @@ body.map-bg {
     0 auto 56px;
 
   text-align: center;
+
+  background: rgba(8, 30, 61, .72);
+
+  border: 1px solid rgba(255, 255, 255, .15);
+
+  border-radius: var(--radius-lg);
+
+  padding: 32px 36px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .3);
+}
+
+
+.intro .section-title {
+
+  color: #fff;
 }
 
 
@@ -243,6 +281,8 @@ body.map-bg {
 
   margin:
     0 auto;
+
+  color: rgba(255, 255, 255, .88);
 }
 
 
@@ -508,4 +548,200 @@ body.map-bg {
     rgba(255, 255, 255, .8);
 
   color: var(--ice-dark);
+}
+
+
+/* =====================================================
+   EXPLORE THE MAP — hoverable landmark hotspots
+   ===================================================== */
+
+.map-explore {
+
+  position: relative;
+
+  width: 100%;
+
+  max-width: 720px;
+
+  margin: 0 auto;
+}
+
+
+.map-explore-img {
+
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-lg);
+}
+
+
+.map-hotspot {
+
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+
+  width: 30px;
+
+  height: 30px;
+
+  border: none;
+
+  background: none;
+
+  padding: 0;
+
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+
+.map-hotspot-dot {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 50%;
+
+  background: rgba(243, 156, 18, .92);
+
+  border: 3px solid #fff;
+
+  box-shadow:
+    0 0 0 4px rgba(243, 156, 18, .35),
+    0 4px 10px rgba(0, 0, 0, .35);
+
+  animation: hotspot-pulse 2.2s ease-in-out infinite;
+}
+
+
+@keyframes hotspot-pulse {
+
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px rgba(243, 156, 18, .35),
+      0 4px 10px rgba(0, 0, 0, .35);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 9px rgba(243, 156, 18, .12),
+      0 4px 10px rgba(0, 0, 0, .35);
+  }
+
+}
+
+
+.map-tooltip {
+
+  position: absolute;
+
+  bottom: calc(100% + 12px);
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 220px;
+
+  background: rgba(8, 30, 61, .96);
+
+  color: #fff;
+
+  border: 1px solid rgba(255, 255, 255, .15);
+
+  border-radius: 12px;
+
+  padding: 14px 16px;
+
+  font-size: .82rem;
+
+  line-height: 1.5;
+
+  text-align: left;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition: opacity .2s ease, visibility .2s ease;
+
+  z-index: 5;
+}
+
+
+.map-tooltip strong {
+
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--gold);
+
+  font-size: .9rem;
+}
+
+
+.map-tooltip::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: 100%;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border: 7px solid transparent;
+
+  border-top-color: rgba(8, 30, 61, .96);
+}
+
+
+.map-hotspot:hover .map-tooltip,
+.map-hotspot:focus-visible .map-tooltip,
+.map-hotspot.open .map-tooltip {
+
+  opacity: 1;
+
+  visibility: visible;
+}
+
+
+/* landmarks near the left edge — open the tooltip rightward so it isn't clipped */
+.map-hotspot--jungle .map-tooltip {
+
+  left: 0;
+
+  transform: translateX(0);
+}
+
+.map-hotspot--jungle .map-tooltip::after {
+  left: 20px;
+}
+
+
+@media(max-width: 560px) {
+
+  .map-tooltip {
+    width: 170px;
+    font-size: .78rem;
+  }
+
 }
