@@ -1,0 +1,27 @@
+/* =====================================================
+   SNOW PLACE LIKE HOME — Reviews Page (reviews.html)
+   ===================================================== */
+
+/* ── Review submit form wrapper ── */
+.review-form-wrap { background:#fff; border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-lg); max-width:600px; }
+
+/* ── Star rating input ── */
+.star-input { display:flex; gap:6px; margin-bottom:4px; }
+.star-input span { font-size:2rem; cursor:pointer; color:#ccc; transition:var(--transition); }
+.star-input span.active, .star-input span:hover { color:var(--gold); transform:scale(1.2); }
+
+/* ── Reviews list ── */
+.reviews-list { display:grid; gap:18px; margin-top:40px; }
+.review-card { background:#fff; border-radius:var(--radius); padding:22px 24px; box-shadow:var(--shadow); border-left:4px solid var(--gold); }
+.review-card .rc-top  { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; flex-wrap:wrap; gap:8px; }
+.review-card .rc-name  { font-weight:800; color:var(--ice-dark); font-size:1rem; }
+.review-card .rc-stars { color:var(--gold); font-size:1.1rem; }
+.review-card .rc-level { font-size:.75rem; color:var(--text-lt); background:var(--ice-snow); padding:3px 10px; border-radius:20px; }
+.review-card p         { font-size:.9rem; color:var(--text-lt); line-height:1.65; }
+.review-card .rc-date  { font-size:.75rem; color:#aaa; margin-top:8px; }
+
+/* ── Average rating box ── */
+.avg-rating { background:#1a5276; border-radius:var(--radius-lg); padding:32px; text-align:center; color:#fff; margin-bottom:40px; }
+.avg-rating .ar-num   { font-size:3.5rem; font-weight:900; color:var(--gold); }
+.avg-rating .ar-stars { font-size:1.8rem; color:var(--gold); margin:6px 0; }
+.avg-rating .ar-sub   { font-size:.9rem; color:rgba(255,255,255,.65); }

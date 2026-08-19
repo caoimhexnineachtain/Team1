@@ -1,0 +1,747 @@
+/* =====================================================
+   SNOW PLACE LIKE HOME — Home Page (index.html)
+   ===================================================== */
+
+/* ── Map background layering ──
+   Layer order (back → front):
+     1. #0d2e5c  — solid blue (fallback / base colour)
+     2. map.png  — full width, static (moves only when the page scrolls)
+     3. page content (z-index handled per element)
+   Sections in base.css are kept transparent/translucent
+   so the map stays visible behind them.
+*/
+body.map-bg {
+  background-color: #0d2e5c;                                    /* layer 1 — blue base */
+  background-image: url("../../../../../assets/images/map.png"); /* layer 2 — full-width map */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  background-attachment: fixed; /* keeps the map filling the whole screen as the page scrolls, instead of running out partway down */
+}
+
+@media (max-width: 900px) {
+  body.map-bg {
+    /* background-attachment:fixed is unreliable on mobile browsers — fall back to a scrolling cover background */
+    background-attachment: scroll;
+  }
+}
+
+/* ── Hero ── */
+/* =====================================================
+   SNOW PLACE LIKE HOME — Homepage
+   ===================================================== */
+
+
+/* =====================================================
+   HERO
+   ===================================================== */
+
+.hero {
+
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  /*
+    IMPORTANT:
+    Do NOT put map.png here.
+
+    The map is already the background
+    of the body.
+
+    Making the hero transparent allows
+    the map to show through.
+  */
+
+  background: transparent;
+}
+
+
+/* =====================================================
+   HERO CONTENT
+   ===================================================== */
+
+.hero-content {
+
+  position: relative;
+
+  z-index: 4;
+
+  max-width: 680px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 30, 61, .68),
+      rgba(8, 30, 61, .42)
+    );
+
+  border: 1px solid rgba(255, 255, 255, .15);
+
+  border-radius: var(--radius-lg);
+
+  padding: 36px 40px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+}
+
+
+.hero-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  background:
+    rgba(13, 46, 92, .65);
+
+  border:
+    1px solid rgba(255, 255, 255, .5);
+
+  color: #fff;
+
+  font-size: .8rem;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  padding: 6px 18px;
+
+  border-radius: 50px;
+
+  margin-bottom: 24px;
+}
+
+
+.hero-title {
+
+  font-size:
+    clamp(2.2rem, 6vw, 4.2rem);
+
+  font-weight: 900;
+
+  color: #fff;
+
+  line-height: 1.08;
+
+  margin-bottom: 14px;
+
+  letter-spacing: -1px;
+
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, .45);
+}
+
+
+.hero-title .accent {
+
+  color: var(--gold);
+}
+
+
+.hero-sub {
+
+  font-size:
+    clamp(1rem, 2.5vw, 1.25rem);
+
+  color:
+    rgba(255, 255, 255, .95);
+
+  line-height: 1.65;
+
+  margin-bottom: 10px;
+
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, .35);
+}
+
+
+.hero-sub2 {
+
+  font-size: .95rem;
+
+  color:
+    rgba(255, 255, 255, .85);
+
+  margin-bottom: 32px;
+
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, .35);
+}
+
+
+.hero-btns {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+}
+
+
+/* =====================================================
+   HERO PENGUIN
+   ===================================================== */
+
+.hero-penguin {
+
+  position: absolute;
+
+  right: 5%;
+
+  bottom: 0;
+
+  font-size:
+    clamp(120px, 18vw, 260px);
+
+  opacity: .30;
+
+  z-index: 2;
+
+  line-height: 1;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   HERO GROUND
+   ===================================================== */
+
+.hero-ground {
+
+  position: absolute;
+
+  bottom: 0;
+
+  left: 0;
+  right: 0;
+
+  height: 80px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(184, 224, 247, .35),
+      transparent
+    );
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   INTRO
+   ===================================================== */
+
+.intro {
+
+  max-width: 700px;
+
+  margin:
+    0 auto 56px;
+
+  text-align: center;
+
+  background: rgba(8, 30, 61, .72);
+
+  border: 1px solid rgba(255, 255, 255, .15);
+
+  border-radius: var(--radius-lg);
+
+  padding: 32px 36px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .3);
+}
+
+
+.intro .section-title {
+
+  color: #fff;
+}
+
+
+.intro .section-sub {
+
+  max-width: 620px;
+
+  margin:
+    0 auto;
+
+  color: rgba(255, 255, 255, .88);
+}
+
+
+/* =====================================================
+   JOURNEY BAR
+   ===================================================== */
+
+.journey-bar {
+
+  position: relative;
+
+  z-index: 3;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 0;
+
+  background:
+    rgba(26, 82, 118, .94);
+
+  border-radius:
+    var(--radius-lg);
+
+  padding: 28px 32px;
+
+  overflow: hidden;
+
+  box-shadow:
+    var(--shadow-lg);
+}
+
+
+.journey-step {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 6px;
+
+  flex: 1;
+
+  min-width: 100px;
+}
+
+
+.journey-step .js-icon {
+
+  font-size: 2.2rem;
+}
+
+
+.journey-step .js-label {
+
+  font-size: .78rem;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+
+  color: #fff;
+
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, .3);
+}
+
+
+.journey-arrow {
+
+  font-size: 1.6rem;
+
+  color:
+    rgba(255, 255, 255, .7);
+
+  padding: 0 8px;
+}
+
+
+@media(max-width: 500px) {
+
+  .journey-arrow {
+    display: none;
+  }
+
+}
+
+
+/* =====================================================
+   FEATURE SECTION
+   ===================================================== */
+
+.section-heading {
+
+  text-align: center;
+
+  margin-bottom: 40px;
+}
+
+
+.feat-grid {
+
+  position: relative;
+
+  z-index: 3;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 24px;
+}
+
+
+.feat-card {
+
+  background:
+    rgba(255, 255, 255, .94);
+
+  border-radius:
+    var(--radius-lg);
+
+  padding: 32px 24px;
+
+  box-shadow:
+    var(--shadow);
+
+  text-align: center;
+
+  border-top:
+    4px solid var(--ice-mid);
+
+  transition:
+    var(--transition);
+}
+
+
+.feat-card:hover {
+
+  transform:
+    translateY(-6px);
+
+  box-shadow:
+    var(--shadow-lg);
+}
+
+
+.feat-card:nth-child(2) {
+
+  border-top-color:
+    var(--ice-light);
+}
+
+
+.feat-card:nth-child(3) {
+
+  border-top-color:
+    var(--gold);
+}
+
+
+.feat-card .fi {
+
+  font-size: 2.6rem;
+
+  margin-bottom: 14px;
+}
+
+
+.feat-card h3 {
+
+  font-size: 1.1rem;
+
+  font-weight: 800;
+
+  color: var(--ice-dark);
+
+  margin-bottom: 8px;
+}
+
+
+.feat-card p {
+
+  font-size: .9rem;
+
+  color: var(--text-lt);
+
+  line-height: 1.65;
+}
+
+
+@media(max-width: 720px) {
+
+  .feat-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}
+
+
+/* =====================================================
+   CTA
+   ===================================================== */
+
+.cta {
+
+  text-align: center;
+}
+
+
+.cta-penguin {
+
+  font-size: 4rem;
+
+  margin-bottom: 16px;
+}
+
+
+.cta .section-sub {
+
+  margin:
+    0 auto 32px;
+}
+
+
+.cta-buttons {
+
+  display: flex;
+
+  gap: 14px;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+}
+
+
+.cta-outline {
+
+  color: var(--ice-dark);
+
+  border-color: var(--ice-mid);
+
+  background: rgba(255, 255, 255, .5);
+}
+
+
+.cta-outline:hover {
+
+  background:
+    rgba(255, 255, 255, .8);
+
+  color: var(--ice-dark);
+}
+
+
+/* =====================================================
+   EXPLORE THE MAP — hoverable landmark hotspots
+   ===================================================== */
+
+.map-explore {
+
+  position: relative;
+
+  width: 100%;
+
+  max-width: 720px;
+
+  margin: 0 auto;
+}
+
+
+.map-explore-img {
+
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-lg);
+}
+
+
+.map-hotspot {
+
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+
+  width: 30px;
+
+  height: 30px;
+
+  border: none;
+
+  background: none;
+
+  padding: 0;
+
+  cursor: pointer;
+
+  z-index: 2;
+}
+
+
+.map-hotspot-dot {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 50%;
+
+  background: rgba(243, 156, 18, .92);
+
+  border: 3px solid #fff;
+
+  box-shadow:
+    0 0 0 4px rgba(243, 156, 18, .35),
+    0 4px 10px rgba(0, 0, 0, .35);
+
+  animation: hotspot-pulse 2.2s ease-in-out infinite;
+}
+
+
+@keyframes hotspot-pulse {
+
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px rgba(243, 156, 18, .35),
+      0 4px 10px rgba(0, 0, 0, .35);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 9px rgba(243, 156, 18, .12),
+      0 4px 10px rgba(0, 0, 0, .35);
+  }
+
+}
+
+
+.map-tooltip {
+
+  position: absolute;
+
+  bottom: calc(100% + 12px);
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 220px;
+
+  background: rgba(8, 30, 61, .96);
+
+  color: #fff;
+
+  border: 1px solid rgba(255, 255, 255, .15);
+
+  border-radius: 12px;
+
+  padding: 14px 16px;
+
+  font-size: .82rem;
+
+  line-height: 1.5;
+
+  text-align: left;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition: opacity .2s ease, visibility .2s ease;
+
+  z-index: 5;
+}
+
+
+.map-tooltip strong {
+
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--gold);
+
+  font-size: .9rem;
+}
+
+
+.map-tooltip::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: 100%;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border: 7px solid transparent;
+
+  border-top-color: rgba(8, 30, 61, .96);
+}
+
+
+.map-hotspot:hover .map-tooltip,
+.map-hotspot:focus-visible .map-tooltip,
+.map-hotspot.open .map-tooltip {
+
+  opacity: 1;
+
+  visibility: visible;
+}
+
+
+/* landmarks near the left edge — open the tooltip rightward so it isn't clipped */
+.map-hotspot--jungle .map-tooltip {
+
+  left: 0;
+
+  transform: translateX(0);
+}
+
+.map-hotspot--jungle .map-tooltip::after {
+  left: 20px;
+}
+
+
+@media(max-width: 560px) {
+
+  .map-tooltip {
+    width: 170px;
+    font-size: .78rem;
+  }
+
+}

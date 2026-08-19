@@ -1,0 +1,48 @@
+/* =====================================================
+   SNOW PLACE LIKE HOME — Endless Mode Page (endless.html)
+   ===================================================== */
+
+/* ── Snowflakes (reused inside .endless-hero) ── */
+.snowflakes { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
+.snowflake  { position:absolute; top:-20px; color:#fff; font-size:1rem; opacity:.7; animation:snowfall linear infinite; }
+@keyframes snowfall {
+  0%   { transform:translateY(0) rotate(0deg);    opacity:.7; }
+  100% { transform:translateY(110vh) rotate(360deg); opacity:0; }
+}
+.snowflake:nth-child(1){left:5%;animation-duration:8s;animation-delay:0s;font-size:1.2rem;}
+.snowflake:nth-child(2){left:15%;animation-duration:12s;animation-delay:-2s;font-size:.8rem;}
+.snowflake:nth-child(3){left:25%;animation-duration:9s;animation-delay:-4s;font-size:1.4rem;}
+.snowflake:nth-child(4){left:35%;animation-duration:11s;animation-delay:-1s;font-size:.9rem;}
+.snowflake:nth-child(5){left:45%;animation-duration:10s;animation-delay:-3s;font-size:1rem;}
+.snowflake:nth-child(6){left:55%;animation-duration:7s;animation-delay:-5s;font-size:1.3rem;}
+.snowflake:nth-child(7){left:65%;animation-duration:13s;animation-delay:-2s;font-size:.7rem;}
+.snowflake:nth-child(8){left:75%;animation-duration:9s;animation-delay:-6s;font-size:1.1rem;}
+.snowflake:nth-child(9){left:85%;animation-duration:11s;animation-delay:-1s;font-size:.8rem;}
+.snowflake:nth-child(10){left:92%;animation-duration:8s;animation-delay:-4s;font-size:1.2rem;}
+
+/* ── Endless hero banner ── */
+.endless-hero { background:#0d2e5c; border-radius:var(--radius-lg); padding:56px 48px; color:#fff; text-align:center; position:relative; overflow:hidden; margin-bottom:48px; }
+.endless-hero h2 { font-size:clamp(2rem,5vw,3rem); font-weight:900; color:var(--gold); margin-bottom:12px; }
+.endless-hero p  { font-size:1rem; max-width:560px; margin:0 auto 28px; line-height:1.7; opacity:.88; }
+
+/* ── Endless stats cards ── */
+.endless-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:48px; }
+@media(max-width:560px){ .endless-stats{grid-template-columns:1fr;} }
+.es-card { background:#fff; border-radius:var(--radius); padding:24px; text-align:center; box-shadow:var(--shadow); }
+.es-card .es-icon { font-size:2rem; margin-bottom:8px; }
+.es-card .es-val  { font-size:2rem; font-weight:900; color:var(--ice-mid); margin-bottom:4px; }
+.es-card .es-lbl  { font-size:.75rem; color:var(--text-lt); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+
+/* ── Leaderboard table ── */
+.leaderboard-table { width:100%; border-collapse:collapse; background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+.leaderboard-table th { background:var(--ice-dark); color:#fff; padding:14px 16px; text-align:left; font-size:.82rem; letter-spacing:1px; text-transform:uppercase; }
+.leaderboard-table td { padding:13px 16px; border-bottom:1px solid var(--ice-snow); font-size:.9rem; color:var(--text); }
+.leaderboard-table tr:last-child td { border-bottom:none; }
+.leaderboard-table tr:hover td { background:var(--ice-snow); }
+.rank-gold   { color:var(--gold);  font-weight:900; font-size:1.2rem; }
+.rank-silver { color:#9e9e9e; font-weight:900; font-size:1.1rem; }
+.rank-bronze { color:#cd7f32; font-weight:900; font-size:1.1rem; }
+
+/* ── Score submit form ── */
+.lb-submit-form { background:#fff; border-radius:var(--radius); padding:28px; box-shadow:var(--shadow); max-width:480px; }
+.lb-submit-form h3 { font-size:1.1rem; font-weight:800; color:var(--ice-dark); margin-bottom:18px; }

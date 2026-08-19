@@ -1,0 +1,17 @@
+/* =====================================================
+   SNOW PLACE LIKE HOME — Gallery Page (gallery.html)
+   ===================================================== */
+
+/* ── Gallery grid ── */
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+.gallery-item { border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); cursor:pointer; transition:var(--transition); aspect-ratio:4/3; background:var(--ice-snow); display:flex; align-items:center; justify-content:center; font-size:5rem; position:relative; }
+.gallery-item:hover { transform:scale(1.03); box-shadow:var(--shadow-lg); }
+.gallery-item .gal-label { position:absolute; bottom:0; left:0; right:0; background:rgba(13,46,92,.75); color:#fff; font-size:.78rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:8px; text-align:center; }
+
+/* ── Lightbox ── */
+.lightbox { position:fixed; inset:0; background:rgba(0,0,0,.88); z-index:9999; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; }
+.lightbox.open { opacity:1; pointer-events:all; }
+.lightbox-inner { text-align:center; max-width:90vw; }
+.lightbox-inner .lb-content { font-size:10rem; }
+.lightbox-inner p { color:#fff; font-size:1.1rem; font-weight:700; margin-top:12px; }
+.lightbox-close { position:absolute; top:20px; right:28px; color:#fff; font-size:2rem; cursor:pointer; background:none; border:none; }
