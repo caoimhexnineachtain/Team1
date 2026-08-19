@@ -3,6 +3,21 @@
    ============================================================ */
 const API = '';  // same-origin; backend serves frontend
 
+/* ── Map hotspots (index.html "Explore The Map" section) ──
+   Hover shows the tooltip (desktop). Tap toggles it on touch
+   devices, and tapping elsewhere closes any open tooltip. */
+document.querySelectorAll('.map-hotspot').forEach(spot => {
+  spot.addEventListener('click', e => {
+    e.stopPropagation();
+    const wasOpen = spot.classList.contains('open');
+    document.querySelectorAll('.map-hotspot.open').forEach(s => s.classList.remove('open'));
+    if (!wasOpen) spot.classList.add('open');
+  });
+});
+document.addEventListener('click', () => {
+  document.querySelectorAll('.map-hotspot.open').forEach(s => s.classList.remove('open'));
+});
+
 /* ── Mobile nav ── */
 const navToggle = document.getElementById('navToggle');
 const navMobile = document.getElementById('navMobile');
@@ -87,6 +102,46 @@ document.querySelectorAll('.faq-q').forEach(q => {
     document.querySelectorAll('.faq-q').forEach(x => x.classList.remove('open'));
     if (!isOpen) { answer.classList.add('open'); q.classList.add('open'); }
   });
+});
+
+/* ── Carousel (About page "How We Made It") ── */
+document.querySelectorAll('[data-carousel]').forEach(carousel => {
+  const track = carousel.querySelector('.carousel-track');
+  const slides = Array.from(track.children);
+  const prevBtn = carousel.querySelector('.carousel-prev');
+  const nextBtn = carousel.querySelector('.carousel-next');
+  const dotsWrap = carousel.querySelector('.carousel-dots');
+  let index = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'carousel-dot';
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((d, di) => d.classList.toggle('active', di === index));
+  }
+
+  prevBtn.addEventListener('click', () => goTo(index - 1));
+  nextBtn.addEventListener('click', () => goTo(index + 1));
+
+  let startX = null;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
+
+  goTo(0);
 });
 
 /* ── Lightbox (gallery) ── */
