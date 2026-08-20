@@ -14,7 +14,6 @@
       <a href="how-to-play.html">How to Play</a>
       <a href="endless.html">Endless Mode</a>
       <a href="about.html">About Us</a>
-      <a href="reviews.html">Reviews</a>
       <a href="contact.html">Contact</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
@@ -26,7 +25,6 @@
     <a href="how-to-play.html">How to Play</a>
     <a href="endless.html">Endless Mode</a>
     <a href="about.html">About Us</a>
-    <a href="reviews.html">Reviews</a>
     <a href="contact.html">Contact</a>
     <a href="faq.html">FAQ</a>
     <a href="gallery.html">Gallery</a>

@@ -1,66 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Contact | Snow Place Like Home</title>
-<link rel="stylesheet" href="css/base.css"/>
-<link rel="stylesheet" href="css/contact.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  <title>Contact | Snow Place Like Home</title>
+ 
+  <link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/contact.css">
 </head>
+ 
 <body class="theme-ice">
+ 
+  <!-- Navigation -->
 <div id="nav-placeholder"></div>
-
+ 
+  <!-- Page Header -->
 <div class="page-header" data-emoji="📬">
-  <div class="container">
-    <div class="tag">Get In Touch</div>
-    <h1>Contact Us</h1>
-    <p>Questions about the game? Feedback for the team? Drop us a message below.</p>
-  </div>
+<div class="container">
+<div class="tag">Get In Touch</div>
+ 
+      <h1>Contact Us</h1>
+ 
+      <p>
+
+        Questions about the game? Feedback for the team?
+
+        Drop us a message below.
+</p>
 </div>
-
+</div>
+ 
+  <!-- Contact Section -->
 <section class="section">
-  <div class="container">
-    <div class="two-col">
-      <div class="reveal-left">
-        <div style="background:#fff;border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-lg);max-width:560px;">
-          <div class="tag">Send a Message</div>
-          <h2 style="font-size:1.4rem;font-weight:800;color:var(--blue-dark);margin-bottom:20px;">We'd Love to Hear From You</h2>
-          <div id="contactMsg" class="form-msg"></div>
-          <form class="contact-form" id="contactForm" onsubmit="submitContact(event)">
-            <div class="form-group">
-              <label for="cName">Your Name *</label>
-              <input type="text" id="cName" name="name" placeholder="Enter your name" required maxlength="100"/>
-            </div>
-            <div class="form-group">
-              <label for="cEmail">Email Address *</label>
-              <input type="email" id="cEmail" name="email" placeholder="your@email.com" required maxlength="200"/>
-            </div>
-            <div class="form-group">
-              <label for="cSubject">Subject *</label>
-              <input type="text" id="cSubject" name="subject" placeholder="What's this about?" required maxlength="200"/>
-            </div>
-            <div class="form-group">
-              <label for="cMessage">Message *</label>
-              <textarea id="cMessage" name="message" placeholder="Type your message here..." required maxlength="2000"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" id="cSubmitBtn">📬 Send Message</button>
-          </form>
-        </div>
-      </div>
-          <div style="background:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);">
-            <h3 style="font-size:1rem;font-weight:800;color:var(--blue-dark);margin-bottom:14px;">💬 Common Questions</h3>
-            <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;margin-bottom:10px;"><strong>Questions about the game?</strong><br>Check our <a href="faq.html" style="color:var(--blue);">FAQ page</a> — it covers most common queries.</p>
-            <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;margin-bottom:10px;"><strong>Want to leave a review?</strong><br>Head to our <a href="reviews.html" style="color:var(--blue);">Reviews page</a> to share your experience.</p>
-            <p style="font-size:.88rem;color:var(--text-lt);line-height:1.7;"><strong>Response time:</strong><br>We aim to respond to all messages within a few days.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="container">
+ 
+      <div class="two-col">
+ 
+        <!-- Contact Form -->
+<div class="reveal-left">
+<div
 
+            style="
+
+              background: #fff;
+
+              border-radius: var(--radius-lg);
+
+              padding: 36px;
+
+              box-shadow: var(--shadow-lg);
+
+              max-width: 560px;
+
+            "
+>
+ 
+            <div class="tag">Send a Message</div>
+ 
+            <h2
+
+              style="
+
+                font-size: 1.4rem;
+
+                font-weight: 800;
+
+                color: var(--blue-dark);
+
+                margin-bottom: 20px;
+
+              "
+>
+
+              We'd Love to Hear From You
+</h2>
+ 
+            <!-- Success / Error Message -->
+<div id="contactMsg" class="form-msg"></div>
+ 
+            <form
+
+              class="contact-form"
+
+              id="contactForm"
+
+              onsubmit="submitContact(event)"
+>
+ 
+              <!-- Web3Forms Access Key -->
+<input
+
+                type="hidden"
+
+                name="access_key"
+
+                value="95dba075-05f9-45f3-b4af-d1b725e92479"
+>
+ 
+              <!-- Email Subject -->
+<input
+
+                type="hidden"
+
+                name="from_name"
+
+                value="Snow Place Like Home Contact Form"
+>
+ 
+              <!-- Optional Web3Forms Subject -->
+<input
+
+                type="hidden"
+
+                name="email_subject"
+
+                value="New Contact Form Message"
+>
+ 
+              <!-- Name -->
+<div class="form-group">
+<label for="cName">Your Name *</label>
+ 
+                <input
+
+                  type="text"
+
+                  id="cName"
+
+                  name="name"
+
+                  placeholder="Enter your name"
+
+                  required
+
+                  maxlength="100"
+>
+</div>
+ 
+              <!-- Email -->
+<div class="form-group">
+<label for="cEmail">Email Address *</label>
+ 
+                <input
+
+                  type="email"
+
+                  id="cEmail"
+
+                  name="email"
+
+                  placeholder="your@email.com"
+
+                  required
+
+                  maxlength="200"
+>
+</div>
+ 
+              <!-- Subject -->
+<div class="form-group">
+<label for="cSubject">Subject *</label>
+ 
+                <input
+
+                  type="text"
+
+                  id="cSubject"
+
+                  name="subject"
+
+                  placeholder="What's this about?"
+
+                  required
+
+                  maxlength="200"
+>
+</div>
+ 
+              <!-- Message -->
+<div class="form-group">
+<label for="cMessage">Message *</label>
+ 
+                <textarea
+
+                  id="cMessage"
+
+                  name="message"
+
+                  placeholder="Type your message here..."
+
+                  required
+
+                  maxlength="2000"
+></textarea>
+</div>
+ 
+              <!-- Submit Button -->
+<button
+
+                type="submit"
+
+                class="btn btn-primary"
+
+                id="cSubmitBtn"
+>
+
+                📬 Send Message
+</button>
+ 
+            </form>
+ 
+          </div>
+</div>
+ 
+        <!-- Contact Information -->
+<div class="reveal-right">
+ 
+          <div
+
+            style="
+
+              background: #fff;
+
+              border-radius: var(--radius);
+
+              padding: 24px;
+
+              box-shadow: var(--shadow);
+
+            "
+>
+ 
+            <h3
+
+              style="
+
+                font-size: 1rem;
+
+                font-weight: 800;
+
+                color: var(--blue-dark);
+
+                margin-bottom: 14px;
+
+              "
+>
+
+              💬 Common Questions
+</h3>
+ 
+            <p
+
+              style="
+
+                font-size: .88rem;
+
+                color: var(--text-lt);
+
+                line-height: 1.7;
+
+                margin-bottom: 10px;
+
+              "
+>
+<strong>Questions about the game?</strong>
+<br>
+ 
+              Check our
+<a href="faq.html" style="color: var(--blue);">
+
+                FAQ page
+</a>
+
+              — it covers most common queries.
+</p>
+ 
+            <p
+
+              style="
+
+                font-size: .88rem;
+
+                color: var(--text-lt);
+
+                line-height: 1.7;
+
+                margin-bottom: 10px;
+
+              "
+>
+<strong>Want to leave a review?</strong>
+<br>
+ 
+              Head to our
+<a href="reviews.html" style="color: var(--blue);">
+
+                Reviews page
+</a>
+
+              to share your experience.
+</p>
+ 
+            <p
+
+              style="
+
+                font-size: .88rem;
+
+                color: var(--text-lt);
+
+                line-height: 1.7;
+
+              "
+>
+<strong>Response time:</strong>
+<br>
+ 
+              We aim to respond to all messages within a few days.
+</p>
+ 
+          </div>
+ 
+        </div>
+ 
+      </div>
+ 
+    </div>
+</section>
+ 
+  <!-- Footer -->
 <div id="footer-placeholder"></div>
+ 
+  <!-- Scripts -->
 <script src="js/components.js"></script>
 <script src="js/main.js"></script>
 <script src="js/contact.js"></script>
+ 
 </body>
 </html>
+ 

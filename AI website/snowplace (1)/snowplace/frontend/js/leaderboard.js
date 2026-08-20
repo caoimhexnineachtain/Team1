@@ -1,93 +1,170 @@
 /* leaderboard.js — Endless Mode leaderboard */
-async function loadLeaderboard() {
-  document.getElementById('lbLoading').style.display = 'block';
-  document.getElementById('lbTableWrap').style.display = 'none';
-  try {
-    const res  = await fetch('/api/leaderboard');
-    const data = await res.json();
-    const rows = data.leaderboard || [];
-    const body = document.getElementById('lbBody');
-    const empty = document.getElementById('lbEmpty');
-    body.innerHTML = '';
-    if (rows.length === 0) {
-      empty.style.display = 'block';
-    } else {
-      empty.style.display = 'none';
-      const medals = ['🥇','🥈','🥉'];
-      rows.forEach((r, i) => {
-        const rank = i < 3
-          ? `<span class="rank-${['gold','silver','bronze'][i]}">${medals[i]}</span>`
-          : `<span style="font-weight:700;color:var(--text-lt);">#${i+1}</span>`;
-        const mins = Math.floor(r.survival_time / 60);
-        const secs = r.survival_time % 60;
-        const time = r.survival_time > 0 ? `${mins}m ${secs}s` : '—';
-        body.innerHTML += `<tr>
-          <td>${rank}</td>
-          <td style="font-weight:700;">${escHtml(r.player_name)}</td>
-          <td style="font-weight:800;color:var(--blue);">${r.score.toLocaleString()}</td>
-          <td>${r.ice_cubes > 0 ? '🧊 ' + r.ice_cubes : '—'}</td>
-          <td>${time}</td>
-        </tr>`;
-      });
-      // Update top stats
-      if (rows.length > 0) {
-        const el = document.getElementById('highScore');
-        if (el) el.textContent = rows[0].score.toLocaleString();
-        const maxTime = Math.max(...rows.map(r => r.survival_time));
-        const lr = document.getElementById('longestRun');
-        if (lr) lr.textContent = maxTime > 0 ? Math.floor(maxTime/60)+'m '+maxTime%60+'s' : '—';
-        const maxCubes = Math.max(...rows.map(r => r.ice_cubes));
-        const mc = document.getElementById('mostCubes');
-        if (mc) mc.textContent = maxCubes > 0 ? maxCubes : '—';
-      }
-    }
-    document.getElementById('lbLoading').style.display = 'none';
-    document.getElementById('lbTableWrap').style.display = 'block';
-  } catch (e) {
-    document.getElementById('lbLoading').textContent = 'Could not load leaderboard. Make sure the server is running.';
-  }
-}
+// ============================================
+// WEB3FORMS SCORE SUBMISSION
+// ============================================
+
+// PUT YOUR WEB3FORMS ACCESS KEY HERE
+const WEB3FORMS_ACCESS_KEY = "95dba075-05f9-45f3-b4af-d1b725e92479";
+
 
 async function submitScore() {
-  const name  = document.getElementById('lbName').value.trim();
-  const score = document.getElementById('lbScore').value;
-  const cubes = document.getElementById('lbCubes').value || 0;
-  const time  = document.getElementById('lbTime').value || 0;
-  const msg   = document.getElementById('lbMsg');
-  msg.className = 'form-msg';
-  if (!name || !score) {
-    msg.textContent = 'Please enter your name and score.';
-    msg.className = 'form-msg error';
+
+  // Get form values
+  const name = document.getElementById("lbName").value.trim();
+  const score = document.getElementById("lbScore").value;
+  const cubes = document.getElementById("lbCubes").value || 0;
+  const time = document.getElementById("lbTime").value || 0;
+
+  const msg = document.getElementById("lbMsg");
+
+
+  // Reset message
+  msg.className = "form-msg";
+  msg.textContent = "";
+
+
+  // Validate
+  if (!name) {
+
+    msg.textContent = "Please enter your name.";
+    msg.className = "form-msg error";
+
     return;
   }
-  try {
-    const res  = await fetch('/api/leaderboard', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ player_name: name, score: parseInt(score), ice_cubes: parseInt(cubes), survival_time: parseInt(time) })
-    });
-    const data = await res.json();
-    if (data.success) {
-      msg.textContent = '🏆 Score submitted! Great run!';
-      msg.className = 'form-msg success';
-      document.getElementById('lbName').value = '';
-      document.getElementById('lbScore').value = '';
-      document.getElementById('lbCubes').value = '';
-      document.getElementById('lbTime').value = '';
-      loadLeaderboard();
-    } else {
-      msg.textContent = data.error || 'Something went wrong.';
-      msg.className = 'form-msg error';
-    }
-  } catch (e) {
-    msg.textContent = 'Server not reachable. Is the server running?';
-    msg.className = 'form-msg error';
+
+
+  if (score === "" || Number(score) < 0) {
+
+    msg.textContent = "Please enter a valid score.";
+    msg.className = "form-msg error";
+
+    return;
   }
-}
 
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
 
-// Auto-load on page ready
-document.addEventListener('DOMContentLoaded', loadLeaderboard);
+  // Show submitting message
+  msg.textContent = "Submitting your score...";
+  msg.className = "form-msg";
+
+
+  // Create Web3Forms data
+  const formData = new FormData();
+
+
+  // Web3Forms access key
+  formData.append(
+    "access_key",
+    WEB3FORMS_ACCESS_KEY
+  );
+
+
+  // Email subject
+  formData.append(
+    "subject",
+    `🏆 Endless Mode Score - ${name}`
+  );
+
+
+  // Sender name
+  formData.append(
+    "from_name",
+    "Snow Place Like Home"
+  );
+
+
+  // Score information
+  formData.append(
+    "Player Name",
+    name
+  );
+
+  formData.append(
+    "Score",
+    score
+  );
+
+  formData.append(
+    "Ice Cubes Collected",
+    cubes
+  );
+
+  formData.append(
+    "Survival Time",
+    `${time} seconds`
+  );
+
+
+  // Optional message
+  formData.append(
+    "message",
+    `
+Snow Place Like Home - Endless Mode
+
+Player: ${name}
+Score: ${score}
+Ice Cubes: ${cubes}
+Survival Time: ${time} seconds
+    `
+  );
+
+
+  try {
+
+    // Send to Web3Forms
+    const response = await fetch(
+      "https://api.web3forms.com/submit",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+
+    const data = await response.json();
+
+
+    // Successful submission
+    if (data.success) {
+
+      msg.textContent =
+        "🏆 Score submitted successfully!";
+
+      msg.className =
+        "form-msg success";
+
+
+      // Clear form
+      document.getElementById("lbName").value = "";
+      document.getElementById("lbScore").value = "";
+      document.getElementById("lbCubes").value = "";
+      document.getElementById("lbTime").value = "";
+
+
+    } else {
+
+      msg.textContent =
+        data.message || "Something went wrong.";
+
+      msg.className =
+        "form-msg error";
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      "Web3Forms error:",
+      error
+    );
+
+
+    msg.textContent =
+      "Could not submit the score. Please try again.";
+
+    msg.className =
+      "form-msg error";
+
+  }
+
+}
