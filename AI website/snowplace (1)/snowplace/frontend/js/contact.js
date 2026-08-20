@@ -1,5 +1,6 @@
 async function submitContact(e) {
   e.preventDefault();
+<<<<<<< HEAD
  
   const form = document.getElementById("contactForm");
   const msg = document.getElementById("contactMsg");
@@ -8,11 +9,25 @@ async function submitContact(e) {
   msg.textContent = "";
   msg.className = "form-msg";
  
+=======
+
+  const form = document.getElementById("contactForm");
+  const msg = document.getElementById("contactMsg");
+  const btn = document.getElementById("cSubmitBtn");
+
+  msg.textContent = "";
+  msg.className = "form-msg";
+
+>>>>>>> f4ee9e973c5c4920b78f99c4ea2c96a15da8dea7
   const name = document.getElementById("cName").value.trim();
   const email = document.getElementById("cEmail").value.trim();
   const subject = document.getElementById("cSubject").value.trim();
   const message = document.getElementById("cMessage").value.trim();
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> f4ee9e973c5c4920b78f99c4ea2c96a15da8dea7
   // Validate required fields
   if (!name || !email || !subject || !message) {
     msg.textContent = "Please fill in all required fields.";

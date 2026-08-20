@@ -10,7 +10,18 @@
   <link rel="stylesheet" href="css/index.css"/>
 </head>
 
-<body class="map-bg">
+<body>
+<style>
+  /* ── index.html only: map background ── */
+  body {
+    background-color: #0d2e5c;                    /* blue sits behind everything */
+    background-image: url("images/map.png");       /* map on top of blue */
+    background-size: 100% auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;                 /* scrolls with the page */
+  }
+</style>
 
   <!-- NAVBAR -->
   <div id="nav-placeholder"></div>
